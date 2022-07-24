@@ -174,7 +174,6 @@ public class MainScr extends javax.swing.JFrame {
         // TODO add your handling code here:
         try {
               host = txtIP.getText();
-              //FunctionsCtr funCTR = new FunctionsCtr();
               RATClientCtr.ConnectionCtr(host);
               String res = RATClientCtr.getResult();
               if(res.equals("ok")) {
@@ -208,7 +207,7 @@ public class MainScr extends javax.swing.JFrame {
 
     private void AppBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_AppBtnActionPerformed
         // TODO add your handling code here:
-        Test t = new Test();
+        AppRunning t = new AppRunning();
         t.setVisible(true);
     }//GEN-LAST:event_AppBtnActionPerformed
 
