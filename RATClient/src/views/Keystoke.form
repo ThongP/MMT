@@ -27,7 +27,7 @@
           <Group type="102" alignment="0" attributes="0">
               <EmptySpace max="-2" attributes="0"/>
               <Group type="103" groupAlignment="0" attributes="0">
-                  <Component id="jScrollPane1" max="32767" attributes="0"/>
+                  <Component id="jLabel1" max="32767" attributes="0"/>
                   <Group type="102" attributes="0">
                       <Group type="103" groupAlignment="0" attributes="0">
                           <Group type="102" alignment="0" attributes="0">
@@ -35,15 +35,15 @@
                               <EmptySpace max="32767" attributes="0"/>
                           </Group>
                           <Group type="102" alignment="0" attributes="0">
-                              <Component id="StopBtn" min="-2" pref="80" max="-2" attributes="0"/>
+                              <Component id="HookBtn" min="-2" pref="80" max="-2" attributes="0"/>
                               <EmptySpace min="-2" pref="62" max="-2" attributes="0"/>
-                              <Component id="jButton2" min="-2" pref="83" max="-2" attributes="0"/>
+                              <Component id="UnhookBtn" min="-2" pref="83" max="-2" attributes="0"/>
                               <EmptySpace pref="72" max="32767" attributes="0"/>
-                              <Component id="jButton3" min="-2" pref="84" max="-2" attributes="0"/>
+                              <Component id="PrintkeyBtn" min="-2" pref="84" max="-2" attributes="0"/>
                               <EmptySpace min="-2" pref="67" max="-2" attributes="0"/>
                           </Group>
                       </Group>
-                      <Component id="StartBtn" min="-2" pref="82" max="-2" attributes="0"/>
+                      <Component id="DeleteBtn" min="-2" pref="82" max="-2" attributes="0"/>
                   </Group>
               </Group>
               <EmptySpace max="-2" attributes="0"/>
@@ -55,13 +55,13 @@
           <Group type="102" alignment="0" attributes="0">
               <Component id="BackBtn" min="-2" max="-2" attributes="0"/>
               <EmptySpace max="-2" attributes="0"/>
-              <Component id="jScrollPane1" min="-2" pref="400" max="-2" attributes="0"/>
-              <EmptySpace min="-2" pref="5" max="-2" attributes="0"/>
+              <Component id="jLabel1" min="-2" pref="399" max="-2" attributes="0"/>
+              <EmptySpace max="-2" attributes="0"/>
               <Group type="103" groupAlignment="3" attributes="0">
-                  <Component id="StartBtn" alignment="3" min="-2" pref="56" max="-2" attributes="0"/>
-                  <Component id="jButton3" alignment="3" pref="58" max="32767" attributes="0"/>
-                  <Component id="jButton2" alignment="3" pref="58" max="32767" attributes="0"/>
-                  <Component id="StopBtn" alignment="3" pref="58" max="32767" attributes="0"/>
+                  <Component id="DeleteBtn" alignment="3" min="-2" pref="56" max="-2" attributes="0"/>
+                  <Component id="PrintkeyBtn" alignment="3" pref="58" max="32767" attributes="0"/>
+                  <Component id="UnhookBtn" alignment="3" pref="58" max="32767" attributes="0"/>
+                  <Component id="HookBtn" alignment="3" pref="58" max="32767" attributes="0"/>
               </Group>
               <EmptySpace max="-2" attributes="0"/>
           </Group>
@@ -69,33 +69,33 @@
     </DimensionLayout>
   </Layout>
   <SubComponents>
-    <Component class="javax.swing.JButton" name="StopBtn">
+    <Component class="javax.swing.JButton" name="HookBtn">
       <Properties>
-        <Property name="text" type="java.lang.String" value="Kill"/>
+        <Property name="text" type="java.lang.String" value="Hook"/>
       </Properties>
       <Events>
-        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="StopBtnActionPerformed"/>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="HookBtnActionPerformed"/>
       </Events>
     </Component>
-    <Component class="javax.swing.JButton" name="jButton2">
+    <Component class="javax.swing.JButton" name="UnhookBtn">
       <Properties>
-        <Property name="text" type="java.lang.String" value="Watch"/>
+        <Property name="text" type="java.lang.String" value="Unhook"/>
       </Properties>
       <Events>
-        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButton2ActionPerformed"/>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="UnhookBtnActionPerformed"/>
       </Events>
     </Component>
-    <Component class="javax.swing.JButton" name="jButton3">
+    <Component class="javax.swing.JButton" name="PrintkeyBtn">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Print key"/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JButton" name="DeleteBtn">
       <Properties>
         <Property name="text" type="java.lang.String" value="Delete"/>
       </Properties>
-    </Component>
-    <Component class="javax.swing.JButton" name="StartBtn">
-      <Properties>
-        <Property name="text" type="java.lang.String" value="Start"/>
-      </Properties>
       <Events>
-        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="StartBtnActionPerformed"/>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="DeleteBtnActionPerformed"/>
       </Events>
     </Component>
     <Component class="javax.swing.JButton" name="BackBtn">
@@ -106,25 +106,15 @@
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="BackBtnActionPerformed"/>
       </Events>
     </Component>
-    <Container class="javax.swing.JScrollPane" name="jScrollPane1">
-      <AuxValues>
-        <AuxValue name="autoScrollPane" type="java.lang.Boolean" value="true"/>
-      </AuxValues>
-
-      <Layout class="org.netbeans.modules.form.compat2.layouts.support.JScrollPaneSupportLayout"/>
-      <SubComponents>
-        <Component class="javax.swing.JTable" name="jTable1">
-          <Properties>
-            <Property name="model" type="javax.swing.table.TableModel" editor="org.netbeans.modules.form.editors2.TableModelEditor">
-              <Table columnCount="3" rowCount="20">
-                <Column editable="true" title="New Process" type="java.lang.Object"/>
-                <Column editable="true" title="ID Process" type="java.lang.Object"/>
-                <Column editable="true" title="Count Thread" type="java.lang.Object"/>
-              </Table>
-            </Property>
-          </Properties>
-        </Component>
-      </SubComponents>
-    </Container>
+    <Component class="javax.swing.JLabel" name="jLabel1">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Note"/>
+        <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
+          <Border info="org.netbeans.modules.form.compat2.border.LineBorderInfo">
+            <LineBorder/>
+          </Border>
+        </Property>
+      </Properties>
+    </Component>
   </SubComponents>
 </Form>
