@@ -8,12 +8,12 @@ package views;
  *
  * @author BLUECORN
  */
-public class Process extends javax.swing.JFrame {
+public class AppRunning extends javax.swing.JFrame {
 
     /**
      * Creates new form Process
      */
-    public Process() {
+    public AppRunning() {
         initComponents();
     }
 
@@ -37,7 +37,7 @@ public class Process extends javax.swing.JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("ListApp");
 
-        StopBtn.setText("Kill");
+        StopBtn.setText("Stop");
         StopBtn.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 StopBtnActionPerformed(evt);
@@ -91,7 +91,7 @@ public class Process extends javax.swing.JFrame {
                 {null, null, null}
             },
             new String [] {
-                "New Process", "ID Process", "Count Thread"
+                "New Application", "ID Application", "Count Thread"
             }
         ));
         jScrollPane1.setViewportView(jTable1);
@@ -145,8 +145,8 @@ public class Process extends javax.swing.JFrame {
 
     private void StopBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_StopBtnActionPerformed
         // TODO add your handling code here:
-        Kill k = new Kill();
-        k.setVisible(true);
+        StopApp s = new StopApp();
+        s.setVisible(true);
     }//GEN-LAST:event_StopBtnActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
@@ -157,7 +157,7 @@ public class Process extends javax.swing.JFrame {
         // TODO add your handling code here:
         MainScr sc = new MainScr();
         sc.setVisible(true);
-        Process.this.setVisible(false);
+        AppRunning.this.setVisible(false);
     }//GEN-LAST:event_BackBtnActionPerformed
 
     /**
@@ -191,7 +191,7 @@ public class Process extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new Process().setVisible(true);
+                new AppRunning().setVisible(true);
             }
         });
     }
