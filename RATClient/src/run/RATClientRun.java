@@ -12,6 +12,6 @@ import views.MainScr;
  */
 public class RATClientRun {
     public static void main(String[] args) {
-        new MainScr().setVisible(true);
+        new MainScr("Input ID").setVisible(true);
     }
 }

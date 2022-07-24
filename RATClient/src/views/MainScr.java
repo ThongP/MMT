@@ -13,14 +13,14 @@ public class MainScr extends javax.swing.JFrame {
     /**
      * Creates new form MainScr
      */
-    public MainScr() {
+    public MainScr(String IP) {
+        //static String IP = host;
         initComponents();
+        txtIP.setText(IP);
         setLocationRelativeTo(null);
     }
     
-    public String host = "";
-    //public RATClientCtr ctr;
-    //public ShutDownCtr sdCtr;
+    public static String host = "";
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -154,7 +154,7 @@ public class MainScr extends javax.swing.JFrame {
 
     private void txtIPActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtIPActionPerformed
         // TODO add your handling code here:
-        
+
     }//GEN-LAST:event_txtIPActionPerformed
 
     private void ShutDownBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ShutDownBtnActionPerformed
@@ -163,7 +163,15 @@ public class MainScr extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(rootPane, "Not connected!");
         }else {
             try {
-                
+                RATClientCtr.ConnectionCtr(host);
+                String res = RATClientCtr.getConnectRes();
+                if(res.equals("ok")) {
+                    RATClientCtr.ShutDown();
+                    JOptionPane.showMessageDialog(rootPane, "Success!");
+                }else {
+                    JOptionPane.showMessageDialog(rootPane, "Fail!");
+                }
+              RATClientCtr.closeConn();
             } catch (Exception e) {
                 e.printStackTrace();
             }
@@ -175,7 +183,7 @@ public class MainScr extends javax.swing.JFrame {
         try {
               host = txtIP.getText();
               RATClientCtr.ConnectionCtr(host);
-              String res = RATClientCtr.getResult();
+              String res = RATClientCtr.getConnectRes();
               if(res.equals("ok")) {
                   JOptionPane.showMessageDialog(rootPane, "Success!");
               }else {
@@ -189,8 +197,8 @@ public class MainScr extends javax.swing.JFrame {
 
     private void ScreenBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ScreenBtnActionPerformed
         // TODO add your handling code here:
-        Screen t = new Screen();
-        t.setVisible(true);
+        Screen s = new Screen();
+        s.setVisible(true);
         MainScr.this.setVisible(false);
     }//GEN-LAST:event_ScreenBtnActionPerformed
 
@@ -207,8 +215,9 @@ public class MainScr extends javax.swing.JFrame {
 
     private void AppBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_AppBtnActionPerformed
         // TODO add your handling code here:
-        AppRunning t = new AppRunning();
-        t.setVisible(true);
+        AppRunning a = new AppRunning(host);
+        a.setVisible(true);
+        MainScr.this.setVisible(false);
     }//GEN-LAST:event_AppBtnActionPerformed
 
     /**
@@ -241,7 +250,7 @@ public class MainScr extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new MainScr().setVisible(true);
+
             }
         });
     }

