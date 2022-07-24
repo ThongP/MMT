@@ -1,7 +1,6 @@
 package views;
 
 import controllers.RATClientCtr;
-import controllers.ShutDownCtr;
 import java.awt.*;
 import javax.swing.JOptionPane;
 
@@ -20,8 +19,8 @@ public class MainScr extends javax.swing.JFrame {
     }
     
     public String host = "";
-    public RATClientCtr ctr;
-    public ShutDownCtr sdCtr;
+    //public RATClientCtr ctr;
+    //public ShutDownCtr sdCtr;
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -164,19 +163,7 @@ public class MainScr extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(rootPane, "Not connected!");
         }else {
             try {
-                sdCtr = new ShutDownCtr("powershell.exe start-process notepad.exe");
-                ctr = new RATClientCtr(host);
-                ctr.openSocket();
                 
-                ctr.ShutDown(sdCtr.sendShutDown());
-                
-                String res = ctr.getResult();
-                if(res.equals("ok")) {
-                JOptionPane.showMessageDialog(rootPane, "Success!");
-                } else{
-                    JOptionPane.showMessageDialog(rootPane, "Fail!");
-                }
-                ctr.closeConn();
             } catch (Exception e) {
                 e.printStackTrace();
             }
@@ -186,16 +173,16 @@ public class MainScr extends javax.swing.JFrame {
     private void ConnectBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ConnectBtnActionPerformed
         // TODO add your handling code here:
         try {
-            host = txtIP.getText();
-            ctr = new RATClientCtr(host);
-            ctr.openSocket();
-            String res = ctr.getResult();
-            if(res.equals("ok")) {
-                JOptionPane.showMessageDialog(rootPane, "Success!");
-            } else{
-                JOptionPane.showMessageDialog(rootPane, "Fail!");
-            }
-            ctr.closeConn();
+              host = txtIP.getText();
+              //FunctionsCtr funCTR = new FunctionsCtr();
+              RATClientCtr.ConnectionCtr(host);
+              String res = RATClientCtr.getResult();
+              if(res.equals("ok")) {
+                  JOptionPane.showMessageDialog(rootPane, "Success!");
+              }else {
+                  JOptionPane.showMessageDialog(rootPane, "Fail!");
+              }
+              RATClientCtr.closeConn();
         } catch (Exception e) {
             e.printStackTrace();
         }
