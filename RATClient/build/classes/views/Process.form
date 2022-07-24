@@ -43,7 +43,7 @@
                               <EmptySpace min="-2" pref="67" max="-2" attributes="0"/>
                           </Group>
                       </Group>
-                      <Component id="StartAppBtn" min="-2" pref="82" max="-2" attributes="0"/>
+                      <Component id="StartBtn" min="-2" pref="82" max="-2" attributes="0"/>
                   </Group>
               </Group>
               <EmptySpace max="-2" attributes="0"/>
@@ -58,7 +58,7 @@
               <Component id="jScrollPane1" min="-2" pref="400" max="-2" attributes="0"/>
               <EmptySpace min="-2" pref="5" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="3" attributes="0">
-                  <Component id="StartAppBtn" alignment="3" min="-2" pref="56" max="-2" attributes="0"/>
+                  <Component id="StartBtn" alignment="3" min="-2" pref="56" max="-2" attributes="0"/>
                   <Component id="jButton3" alignment="3" pref="58" max="32767" attributes="0"/>
                   <Component id="jButton2" alignment="3" pref="58" max="32767" attributes="0"/>
                   <Component id="StopBtn" alignment="3" pref="58" max="32767" attributes="0"/>
@@ -90,12 +90,12 @@
         <Property name="text" type="java.lang.String" value="Delete"/>
       </Properties>
     </Component>
-    <Component class="javax.swing.JButton" name="StartAppBtn">
+    <Component class="javax.swing.JButton" name="StartBtn">
       <Properties>
         <Property name="text" type="java.lang.String" value="Start"/>
       </Properties>
       <Events>
-        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="StartAppBtnActionPerformed"/>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="StartBtnActionPerformed"/>
       </Events>
     </Component>
     <Component class="javax.swing.JButton" name="BackBtn">
