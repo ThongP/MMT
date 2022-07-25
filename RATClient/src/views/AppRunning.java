@@ -159,20 +159,16 @@ public class AppRunning extends javax.swing.JFrame {
     private void WatchBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_WatchBtnActionPerformed
         // TODO add your handling code here:
         try {
-            RATClientCtr.ConnectionCtr(IP);
+            RATClientCtr.ConnectionCtr(host);
             String res = RATClientCtr.getConnectRes();
             if(res.equals("ok")) {
                 RATClientCtr.App();
-                int n = RATClientCtr.CommandResLength();
-                for(int i = 0; i < n; i++) {
-                    RATClientCtr.getCommandRes();
-                }
-                
+                System.out.println(RATClientCtr.getCommandRes());
                 JOptionPane.showMessageDialog(rootPane, "Success!");
             }else {
                 JOptionPane.showMessageDialog(rootPane, "Fail!");
             }
-            RATClientCtr.closeConn();
+          RATClientCtr.closeConn();
         } catch (Exception e) {
             e.printStackTrace();
         }

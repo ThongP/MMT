@@ -28,8 +28,8 @@ public class RATClientCtr {
     public static String getConnectRes() {
         String res = "";
         try {
-            ObjectInputStream ois = new ObjectInputStream(mySocket.getInputStream());
-            res = (String)ois.readObject();
+            DataInputStream ois = new DataInputStream(mySocket.getInputStream());
+            res = ois.readUTF();
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -40,19 +40,24 @@ public class RATClientCtr {
         InputStream ips = mySocket.getInputStream();
         DataInputStream dis = new DataInputStream(ips);
         String input = dis.readUTF();
-        System.out.println(input);
+        
+        int numline = dis.readInt();
+        
+        for (int i =0; i < numline; i++){
+            System.out.println(dis.readUTF());
+        }
         return input;
     }
     
-    public static int CommandResLength() throws IOException {
-        InputStream ips = mySocket.getInputStream();
-        DataInputStream dis = new DataInputStream(ips);
-        String input = dis.readUTF();
-        int n = Integer.valueOf(input);
-        
-        //System.out.println(n);
-        return n;
-    }
+//    public static int getCommandResLength() throws IOException {
+//        InputStream ips = mySocket.getInputStream();
+//        DataInputStream dis = new DataInputStream(ips);
+//        String input = dis.readUTF();
+//        int n = Integer.valueOf(input);
+//        
+//        //System.out.println(n);
+//        return n;
+//    }
     
     public static void closeConn() {
         try {
