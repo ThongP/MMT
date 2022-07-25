@@ -4,10 +4,6 @@
  */
 package views;
 
-import controllers.RATClientCtr;
-import javax.swing.JOptionPane;
-import javax.swing.table.DefaultTableModel;
-
 /**
  *
  * @author BLUECORN
@@ -17,12 +13,8 @@ public class AppRunning extends javax.swing.JFrame {
     /**
      * Creates new form Process
      */
-    
-    public static String IP;
-    
-    public AppRunning(String host) {
+    public AppRunning() {
         initComponents();
-        IP = host;
     }
 
     /**
@@ -35,9 +27,9 @@ public class AppRunning extends javax.swing.JFrame {
     private void initComponents() {
 
         StopBtn = new javax.swing.JButton();
-        WatchBtn = new javax.swing.JButton();
+        jButton2 = new javax.swing.JButton();
         jButton3 = new javax.swing.JButton();
-        StartAppBtn = new javax.swing.JButton();
+        StartBtn = new javax.swing.JButton();
         BackBtn = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         jTable1 = new javax.swing.JTable();
@@ -52,19 +44,19 @@ public class AppRunning extends javax.swing.JFrame {
             }
         });
 
-        WatchBtn.setText("Watch");
-        WatchBtn.addActionListener(new java.awt.event.ActionListener() {
+        jButton2.setText("Watch");
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                WatchBtnActionPerformed(evt);
+                jButton2ActionPerformed(evt);
             }
         });
 
         jButton3.setText("Delete");
 
-        StartAppBtn.setText("Start");
-        StartAppBtn.addActionListener(new java.awt.event.ActionListener() {
+        StartBtn.setText("Start");
+        StartBtn.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                StartAppBtnActionPerformed(evt);
+                StartBtnActionPerformed(evt);
             }
         });
 
@@ -99,7 +91,7 @@ public class AppRunning extends javax.swing.JFrame {
                 {null, null, null}
             },
             new String [] {
-                "ID", "Name", "Window Title"
+                "ID", "Window", "Tiltle"
             }
         ));
         jScrollPane1.setViewportView(jTable1);
@@ -111,56 +103,45 @@ public class AppRunning extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 530, Short.MAX_VALUE)
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(BackBtn)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                    .addGroup(layout.createSequentialGroup()
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(StopBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(62, 62, 62)
+                        .addGap(32, 32, 32)
                         .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 83, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 72, Short.MAX_VALUE)
+                        .addGap(35, 35, 35)
                         .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 84, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(67, 67, 67)))
-                .addComponent(StartAppBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 82, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(28, 28, 28)
+                        .addComponent(StartBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 82, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap())
-            .addComponent(jScrollPane1)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addComponent(BackBtn)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(layout.createSequentialGroup()
+                            .addContainerGap()
+                            .addComponent(BackBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 58, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 58, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 58, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(StartBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 56, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addComponent(StopBtn, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 58, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 400, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(5, 5, 5)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(StartAppBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 56, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButton3, javax.swing.GroupLayout.DEFAULT_SIZE, 58, Short.MAX_VALUE)
-                    .addComponent(WatchBtn, javax.swing.GroupLayout.DEFAULT_SIZE, 58, Short.MAX_VALUE)
-                    .addComponent(StopBtn, javax.swing.GroupLayout.DEFAULT_SIZE, 58, Short.MAX_VALUE))
-                .addContainerGap())
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 390, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void StartAppBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_StartAppBtnActionPerformed
+    private void StartBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_StartBtnActionPerformed
         // TODO add your handling code here:
-        //StartApp startapp = new StartApp();
-        //startapp.setVisible(true);
-        try {
-            RATClientCtr.ConnectionCtr(IP);
-            String res = RATClientCtr.getConnectRes();
-            if(res.equals("ok")) {
-                RATClientCtr.App();
-                JOptionPane.showMessageDialog(rootPane, "Success!");
-            }else {
-                JOptionPane.showMessageDialog(rootPane, "Fail!");
-            }
-              RATClientCtr.closeConn();
-        } catch (Exception e) {
-            e.printStackTrace();
-            }
-    }//GEN-LAST:event_StartAppBtnActionPerformed
+        StartApp startapp = new StartApp();
+        startapp.setVisible(true);
+    }//GEN-LAST:event_StartBtnActionPerformed
 
     private void StopBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_StopBtnActionPerformed
         // TODO add your handling code here:
@@ -168,33 +149,13 @@ public class AppRunning extends javax.swing.JFrame {
         s.setVisible(true);
     }//GEN-LAST:event_StopBtnActionPerformed
 
-    private void WatchBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_WatchBtnActionPerformed
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         // TODO add your handling code here:
-        try {
-            RATClientCtr.ConnectionCtr(IP);
-            String res = RATClientCtr.getConnectRes();
-            if(res.equals("ok")) {
-                RATClientCtr.App();
-                //String input = RATClientCtr.getCommandRes();
-                String[] data = RATClientCtr.getCommandRes().split("\t");
-                
-                DefaultTableModel tblModel = (DefaultTableModel)jTable1.getModel();
-                
-                tblModel.addRow(data);
-                
-                JOptionPane.showMessageDialog(rootPane, "Success!");
-            }else {
-                JOptionPane.showMessageDialog(rootPane, "Fail!");
-            }
-              RATClientCtr.closeConn();
-        } catch (Exception e) {
-            e.printStackTrace();
-            }
-    }//GEN-LAST:event_WatchBtnActionPerformed
+    }//GEN-LAST:event_jButton2ActionPerformed
 
     private void BackBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BackBtnActionPerformed
         // TODO add your handling code here:
-        MainScr sc = new MainScr(IP);
+        MainScr sc = new MainScr();
         sc.setVisible(true);
         AppRunning.this.setVisible(false);
     }//GEN-LAST:event_BackBtnActionPerformed
@@ -230,16 +191,16 @@ public class AppRunning extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                
+                new AppRunning().setVisible(true);
             }
         });
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton BackBtn;
-    private javax.swing.JButton StartAppBtn;
+    private javax.swing.JButton StartBtn;
     private javax.swing.JButton StopBtn;
-    private javax.swing.JButton WatchBtn;
+    private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable jTable1;
