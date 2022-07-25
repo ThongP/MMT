@@ -40,7 +40,18 @@ public class RATClientCtr {
         InputStream ips = mySocket.getInputStream();
         DataInputStream dis = new DataInputStream(ips);
         String input = dis.readUTF();
+        System.out.println(input);
         return input;
+    }
+    
+    public static int CommandResLength() throws IOException {
+        InputStream ips = mySocket.getInputStream();
+        DataInputStream dis = new DataInputStream(ips);
+        String input = dis.readUTF();
+        int n = Integer.valueOf(input);
+        
+        //System.out.println(n);
+        return n;
     }
     
     public static void closeConn() {

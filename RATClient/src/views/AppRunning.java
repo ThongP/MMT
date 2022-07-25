@@ -4,6 +4,10 @@
  */
 package views;
 
+import controllers.RATClientCtr;
+import javax.swing.JOptionPane;
+import static views.MainScr.host;
+
 /**
  *
  * @author BLUECORN
@@ -154,9 +158,24 @@ public class AppRunning extends javax.swing.JFrame {
 
     private void WatchBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_WatchBtnActionPerformed
         // TODO add your handling code here:
-        MainScr sc = new MainScr(IP);
-        sc.setVisible(true);
-        AppRunning.this.setVisible(false);
+        try {
+            RATClientCtr.ConnectionCtr(IP);
+            String res = RATClientCtr.getConnectRes();
+            if(res.equals("ok")) {
+                RATClientCtr.App();
+                int n = RATClientCtr.CommandResLength();
+                for(int i = 0; i < n; i++) {
+                    RATClientCtr.getCommandRes();
+                }
+                
+                JOptionPane.showMessageDialog(rootPane, "Success!");
+            }else {
+                JOptionPane.showMessageDialog(rootPane, "Fail!");
+            }
+            RATClientCtr.closeConn();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }//GEN-LAST:event_WatchBtnActionPerformed
 
     private void BackBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BackBtnActionPerformed

