@@ -5,6 +5,7 @@
 package views;
 
 import controllers.RATClientCtr;
+import java.util.ArrayList;
 import javax.swing.JOptionPane;
 import static views.MainScr.host;
 
@@ -80,8 +81,12 @@ public class StartApp extends javax.swing.JFrame {
             String res = RATClientCtr.getConnectRes();
             if(res.equals("ok")) {
                 RATClientCtr.StartApp(name);
-                //System.out.println(RATClientCtr.getCommandRes());
-                JOptionPane.showMessageDialog(rootPane, "Success!");
+                res = RATClientCtr.getConnectRes();
+                if(res.equals("ok")) {
+                    JOptionPane.showMessageDialog(rootPane, "Success!");
+                }else {
+                    JOptionPane.showMessageDialog(rootPane, "Fail!");
+                }
             }else {
                 JOptionPane.showMessageDialog(rootPane, "Fail!");
             }

