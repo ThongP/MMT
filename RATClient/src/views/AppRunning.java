@@ -154,6 +154,9 @@ public class AppRunning extends javax.swing.JFrame {
 
     private void WatchBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_WatchBtnActionPerformed
         // TODO add your handling code here:
+        MainScr sc = new MainScr(IP);
+        sc.setVisible(true);
+        AppRunning.this.setVisible(false);
     }//GEN-LAST:event_WatchBtnActionPerformed
 
     private void BackBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BackBtnActionPerformed
