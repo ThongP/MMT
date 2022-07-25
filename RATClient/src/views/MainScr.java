@@ -218,7 +218,7 @@ public class MainScr extends javax.swing.JFrame {
 
     private void AppBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_AppBtnActionPerformed
         // TODO add your handling code here:
-        AppRunning a = new AppRunning();
+        AppRunning a = new AppRunning(host);
         a.setVisible(true);
     }//GEN-LAST:event_AppBtnActionPerformed
 
