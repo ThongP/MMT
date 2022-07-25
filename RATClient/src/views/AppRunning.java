@@ -5,7 +5,9 @@
 package views;
 
 import controllers.RATClientCtr;
+import java.util.ArrayList;
 import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
 import static views.MainScr.host;
 
 /**
@@ -35,7 +37,7 @@ public class AppRunning extends javax.swing.JFrame {
 
         StopBtn = new javax.swing.JButton();
         WatchBtn = new javax.swing.JButton();
-        jButton3 = new javax.swing.JButton();
+        DeleteBtn = new javax.swing.JButton();
         StartBtn = new javax.swing.JButton();
         BackBtn = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
@@ -58,7 +60,12 @@ public class AppRunning extends javax.swing.JFrame {
             }
         });
 
-        jButton3.setText("Delete");
+        DeleteBtn.setText("Delete");
+        DeleteBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                DeleteBtnActionPerformed(evt);
+            }
+        });
 
         StartBtn.setText("Start");
         StartBtn.addActionListener(new java.awt.event.ActionListener() {
@@ -76,29 +83,10 @@ public class AppRunning extends javax.swing.JFrame {
 
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null}
+
             },
             new String [] {
-                "ID", "Window", "Tiltle"
+                "ID", "Window"
             }
         ));
         jScrollPane1.setViewportView(jTable1);
@@ -118,7 +106,7 @@ public class AppRunning extends javax.swing.JFrame {
                         .addGap(32, 32, 32)
                         .addComponent(WatchBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 83, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(35, 35, 35)
-                        .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 84, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(DeleteBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 84, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(28, 28, 28)
                         .addComponent(StartBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 82, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap())
@@ -133,7 +121,7 @@ public class AppRunning extends javax.swing.JFrame {
                             .addComponent(BackBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 58, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(WatchBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 58, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 58, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(DeleteBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 58, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(StartBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 56, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addComponent(StopBtn, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 58, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -146,13 +134,13 @@ public class AppRunning extends javax.swing.JFrame {
 
     private void StartBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_StartBtnActionPerformed
         // TODO add your handling code here:
-        StartApp startapp = new StartApp();
+        StartApp startapp = new StartApp(IP);
         startapp.setVisible(true);
     }//GEN-LAST:event_StartBtnActionPerformed
 
     private void StopBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_StopBtnActionPerformed
         // TODO add your handling code here:
-        StopApp s = new StopApp();
+        StopApp s = new StopApp(IP);
         s.setVisible(true);
     }//GEN-LAST:event_StopBtnActionPerformed
 
@@ -163,7 +151,15 @@ public class AppRunning extends javax.swing.JFrame {
             String res = RATClientCtr.getConnectRes();
             if(res.equals("ok")) {
                 RATClientCtr.App();
-                System.out.println(RATClientCtr.getCommandRes());
+                ArrayList<String> data = new ArrayList<String>();
+                RATClientCtr.getCommandRes(data);
+                String out[] = null;
+                DefaultTableModel tblModel = (DefaultTableModel)jTable1.getModel();
+                for(int i = 1; i < data.size(); i++) {
+                    out = data.get(i).trim().split("\\s+");
+                    tblModel.addRow(out);
+                }
+               
                 JOptionPane.showMessageDialog(rootPane, "Success!");
             }else {
                 JOptionPane.showMessageDialog(rootPane, "Fail!");
@@ -180,6 +176,13 @@ public class AppRunning extends javax.swing.JFrame {
         sc.setVisible(true);
         AppRunning.this.setVisible(false);
     }//GEN-LAST:event_BackBtnActionPerformed
+
+    private void DeleteBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_DeleteBtnActionPerformed
+        // TODO add your handling code here:
+        AppRunning.this.setVisible(false);
+        AppRunning a = new AppRunning(IP);
+        a.setVisible(true);
+    }//GEN-LAST:event_DeleteBtnActionPerformed
 
     /**
      * @param args the command line arguments
@@ -219,10 +222,10 @@ public class AppRunning extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton BackBtn;
+    private javax.swing.JButton DeleteBtn;
     private javax.swing.JButton StartBtn;
     private javax.swing.JButton StopBtn;
     private javax.swing.JButton WatchBtn;
-    private javax.swing.JButton jButton3;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable jTable1;
     // End of variables declaration//GEN-END:variables

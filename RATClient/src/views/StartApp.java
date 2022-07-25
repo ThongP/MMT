@@ -4,6 +4,10 @@
  */
 package views;
 
+import controllers.RATClientCtr;
+import javax.swing.JOptionPane;
+import static views.MainScr.host;
+
 /**
  *
  * @author BLUECORN
@@ -13,9 +17,12 @@ public class StartApp extends javax.swing.JFrame {
     /**
      * Creates new form Start
      */
-    public StartApp() {
+    public StartApp(String host) {
         initComponents();
+        IP = host;
     }
+    
+    public static String IP;
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -26,13 +33,13 @@ public class StartApp extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jTextField1 = new javax.swing.JTextField();
+        txtName = new javax.swing.JTextField();
         StartBtn = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Start");
 
-        jTextField1.setText("Nhập tên App");
+        txtName.setText("Input App");
 
         StartBtn.setText("Start");
         StartBtn.addActionListener(new java.awt.event.ActionListener() {
@@ -47,7 +54,7 @@ public class StartApp extends javax.swing.JFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 297, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(txtName, javax.swing.GroupLayout.PREFERRED_SIZE, 297, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(StartBtn)
                 .addContainerGap())
@@ -57,7 +64,7 @@ public class StartApp extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addGap(37, 37, 37)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txtName, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(StartBtn))
                 .addContainerGap(40, Short.MAX_VALUE))
         );
@@ -67,8 +74,21 @@ public class StartApp extends javax.swing.JFrame {
 
     private void StartBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_StartBtnActionPerformed
         // TODO add your handling code here:
-        Startappsuccessful startapp = new Startappsuccessful();
-        startapp.setVisible(true);
+        try {
+            String name = txtName.getText();
+            RATClientCtr.ConnectionCtr(host);
+            String res = RATClientCtr.getConnectRes();
+            if(res.equals("ok")) {
+                RATClientCtr.StartApp(name);
+                //System.out.println(RATClientCtr.getCommandRes());
+                JOptionPane.showMessageDialog(rootPane, "Success!");
+            }else {
+                JOptionPane.showMessageDialog(rootPane, "Fail!");
+            }
+            RATClientCtr.closeConn();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }//GEN-LAST:event_StartBtnActionPerformed
 
     /**
@@ -102,13 +122,13 @@ public class StartApp extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new StartApp().setVisible(true);
+                new StartApp("").setVisible(true);
             }
         });
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton StartBtn;
-    private javax.swing.JTextField jTextField1;
+    private javax.swing.JTextField txtName;
     // End of variables declaration//GEN-END:variables
 }

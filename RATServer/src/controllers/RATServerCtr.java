@@ -90,23 +90,6 @@ public class RATServerCtr {
         return input;
     }
     
-    public void sendCommandRes() throws IOException {
-        String command = "Hello";
-        OutputStream ops = s.getOutputStream();
-        DataOutputStream dos = new DataOutputStream(ops);
-        dos.writeUTF(command);
-        dos.flush();
-    }
-    
-//    public void sendCommandResLenght(int n) throws IOException {
-//        String l = Integer.toString(n);
-//        OutputStream ops = s.getOutputStream();
-//        DataOutputStream dos = new DataOutputStream(ops);
-//        dos.writeUTF(l);
-//        System.out.println(l);
-//        dos.flush();
-//    }
-    
     public void commandHandler(String command) throws IOException {
         String c = command;
         try {

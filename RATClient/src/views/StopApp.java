@@ -4,6 +4,10 @@
  */
 package views;
 
+import controllers.RATClientCtr;
+import javax.swing.JOptionPane;
+import static views.MainScr.host;
+
 /**
  *
  * @author BLUECORN
@@ -13,9 +17,12 @@ public class StopApp extends javax.swing.JFrame {
     /**
      * Creates new form Kill
      */
-    public StopApp() {
+    public StopApp(String host) {
         initComponents();
+        IP = host;
     }
+    
+    public static String IP;
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -26,13 +33,13 @@ public class StopApp extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jTextField1 = new javax.swing.JTextField();
+        txtPID = new javax.swing.JTextField();
         StopBtn = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Kill");
 
-        jTextField1.setText("Nhập ID");
+        txtPID.setText("Input PID");
 
         StopBtn.setText("Stop");
         StopBtn.addActionListener(new java.awt.event.ActionListener() {
@@ -47,7 +54,7 @@ public class StopApp extends javax.swing.JFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 295, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(txtPID, javax.swing.GroupLayout.PREFERRED_SIZE, 295, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 11, Short.MAX_VALUE)
                 .addComponent(StopBtn)
                 .addContainerGap())
@@ -57,7 +64,7 @@ public class StopApp extends javax.swing.JFrame {
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap(41, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txtPID, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(StopBtn))
                 .addGap(39, 39, 39))
         );
@@ -67,8 +74,21 @@ public class StopApp extends javax.swing.JFrame {
 
     private void StopBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_StopBtnActionPerformed
         // TODO add your handling code here:
-        Stopsuccessful stop = new Stopsuccessful();
-        stop.setVisible(true);
+        try {
+            String PID = txtPID.getText();
+            System.out.println(PID);
+            RATClientCtr.ConnectionCtr(host);
+            String res = RATClientCtr.getConnectRes();
+            if(res.equals("ok")) {
+                RATClientCtr.KillApp(PID);
+                JOptionPane.showMessageDialog(rootPane, "Success!");
+            }else {
+                JOptionPane.showMessageDialog(rootPane, "Fail!");
+            }
+          RATClientCtr.closeConn();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }//GEN-LAST:event_StopBtnActionPerformed
 
     /**
@@ -102,13 +122,13 @@ public class StopApp extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new StopApp().setVisible(true);
+                new StopApp("").setVisible(true);
             }
         });
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton StopBtn;
-    private javax.swing.JTextField jTextField1;
+    private javax.swing.JTextField txtPID;
     // End of variables declaration//GEN-END:variables
 }

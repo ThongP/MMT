@@ -7,6 +7,7 @@ import java.io.InputStream;
 import java.io.ObjectInputStream;
 import java.io.OutputStream;
 import java.net.Socket;
+import java.util.ArrayList;
 
 /**
  *
@@ -36,28 +37,20 @@ public class RATClientCtr {
         return res;
     }
     
-    public static String getCommandRes() throws IOException {
+    public static void getCommandRes(ArrayList<String> data) throws IOException {
         InputStream ips = mySocket.getInputStream();
         DataInputStream dis = new DataInputStream(ips);
         String input = dis.readUTF();
+        //ArrayList<String> data = new ArrayList<String>();
+        //String[] data = null;
         
         int numline = dis.readInt();
         
-        for (int i =0; i < numline; i++){
-            System.out.println(dis.readUTF());
+        for (int i = 0; i < numline; i++){
+            data.add(dis.readUTF());
+            System.out.println(data.get(i));
         }
-        return input;
     }
-    
-//    public static int getCommandResLength() throws IOException {
-//        InputStream ips = mySocket.getInputStream();
-//        DataInputStream dis = new DataInputStream(ips);
-//        String input = dis.readUTF();
-//        int n = Integer.valueOf(input);
-//        
-//        //System.out.println(n);
-//        return n;
-//    }
     
     public static void closeConn() {
         try {
@@ -84,11 +77,27 @@ public class RATClientCtr {
     }
     
     public static void App() throws IOException {
-        String command = "powershell.exe Get-Process | Where-Object { $_.MainWindowTitle } | Format-Table ID,Name";
+        String command = "powershell.exe Get-Process | Where-Object { $_.MainWindowTitle } | Format-Table ID,Name -AutoSize -HideTableHeaders";
         OutputStream ops = mySocket.getOutputStream();
         DataOutputStream dos = new DataOutputStream(ops);
         dos.writeUTF(command);
         dos.flush();
+    }
+    
+    public static void KillApp(String id) throws IOException {
+        String command = "powershell.exe taskkill /f /pid " + id;
+        OutputStream ops = mySocket.getOutputStream();
+        DataOutputStream dos = new DataOutputStream(ops);
+        dos.writeUTF(command);
+        dos.flush();
+    }
+    
+    public static void StartApp(String name) throws IOException {
+    String command = "powershell.exe start-process " + name + ".exe ";
+    OutputStream ops = mySocket.getOutputStream();
+    DataOutputStream dos = new DataOutputStream(ops);
+    dos.writeUTF(command);
+    dos.flush();
     }
     
 }
