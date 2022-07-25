@@ -13,9 +13,12 @@ public class AppRunning extends javax.swing.JFrame {
     /**
      * Creates new form Process
      */
-    public AppRunning() {
+    public AppRunning(String host) {
         initComponents();
+        IP = host;
     }
+    
+    public static String IP;
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -27,7 +30,7 @@ public class AppRunning extends javax.swing.JFrame {
     private void initComponents() {
 
         StopBtn = new javax.swing.JButton();
-        jButton2 = new javax.swing.JButton();
+        WatchBtn = new javax.swing.JButton();
         jButton3 = new javax.swing.JButton();
         StartBtn = new javax.swing.JButton();
         BackBtn = new javax.swing.JButton();
@@ -44,10 +47,10 @@ public class AppRunning extends javax.swing.JFrame {
             }
         });
 
-        jButton2.setText("Watch");
-        jButton2.addActionListener(new java.awt.event.ActionListener() {
+        WatchBtn.setText("Watch");
+        WatchBtn.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton2ActionPerformed(evt);
+                WatchBtnActionPerformed(evt);
             }
         });
 
@@ -109,7 +112,7 @@ public class AppRunning extends javax.swing.JFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(StopBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(32, 32, 32)
-                        .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 83, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(WatchBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 83, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(35, 35, 35)
                         .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 84, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(28, 28, 28)
@@ -125,7 +128,7 @@ public class AppRunning extends javax.swing.JFrame {
                             .addContainerGap()
                             .addComponent(BackBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 58, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 58, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(WatchBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 58, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 58, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(StartBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 56, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addComponent(StopBtn, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 58, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -149,13 +152,13 @@ public class AppRunning extends javax.swing.JFrame {
         s.setVisible(true);
     }//GEN-LAST:event_StopBtnActionPerformed
 
-    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+    private void WatchBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_WatchBtnActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jButton2ActionPerformed
+    }//GEN-LAST:event_WatchBtnActionPerformed
 
     private void BackBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BackBtnActionPerformed
         // TODO add your handling code here:
-        MainScr sc = new MainScr();
+        MainScr sc = new MainScr(IP);
         sc.setVisible(true);
         AppRunning.this.setVisible(false);
     }//GEN-LAST:event_BackBtnActionPerformed
@@ -191,7 +194,7 @@ public class AppRunning extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new AppRunning().setVisible(true);
+                new AppRunning("").setVisible(true);
             }
         });
     }
@@ -200,7 +203,7 @@ public class AppRunning extends javax.swing.JFrame {
     private javax.swing.JButton BackBtn;
     private javax.swing.JButton StartBtn;
     private javax.swing.JButton StopBtn;
-    private javax.swing.JButton jButton2;
+    private javax.swing.JButton WatchBtn;
     private javax.swing.JButton jButton3;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable jTable1;
