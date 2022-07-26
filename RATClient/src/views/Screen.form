@@ -28,7 +28,7 @@
               <EmptySpace max="-2" attributes="0"/>
               <Component id="ShotBtn" min="-2" pref="90" max="-2" attributes="0"/>
               <EmptySpace type="separate" max="-2" attributes="0"/>
-              <Component id="jButton1" min="-2" pref="91" max="-2" attributes="0"/>
+              <Component id="SaveBtn" min="-2" pref="91" max="-2" attributes="0"/>
               <EmptySpace pref="316" max="32767" attributes="0"/>
               <Component id="BackBtn" min="-2" pref="87" max="-2" attributes="0"/>
               <EmptySpace max="-2" attributes="0"/>
@@ -44,7 +44,7 @@
               <Group type="103" groupAlignment="0" max="-2" attributes="0">
                   <Component id="ShotBtn" alignment="0" min="-2" pref="30" max="-2" attributes="0"/>
                   <Component id="BackBtn" alignment="1" max="32767" attributes="0"/>
-                  <Component id="jButton1" alignment="0" max="32767" attributes="0"/>
+                  <Component id="SaveBtn" alignment="0" max="32767" attributes="0"/>
               </Group>
               <EmptySpace max="-2" attributes="0"/>
           </Group>
@@ -65,10 +65,13 @@
         <EventHandler event="ancestorAdded" listener="javax.swing.event.AncestorListener" parameters="javax.swing.event.AncestorEvent" handler="jLabel1AncestorAdded"/>
       </Events>
     </Component>
-    <Component class="javax.swing.JButton" name="jButton1">
+    <Component class="javax.swing.JButton" name="SaveBtn">
       <Properties>
         <Property name="text" type="java.lang.String" value="Save"/>
       </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="SaveBtnActionPerformed"/>
+      </Events>
     </Component>
     <Component class="javax.swing.JButton" name="ShotBtn">
       <Properties>
