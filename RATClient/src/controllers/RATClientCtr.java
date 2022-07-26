@@ -142,6 +142,7 @@ public class RATClientCtr {
         DataOutputStream dos = new DataOutputStream(ops);
         dos.writeUTF(command);
         dos.flush();
+        key.clear();
         try {
             InputStream ips = mySocket.getInputStream();
             DataInputStream dis = new DataInputStream(ips);
