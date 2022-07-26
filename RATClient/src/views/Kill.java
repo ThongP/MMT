@@ -4,6 +4,10 @@
  */
 package views;
 
+import controllers.RATClientCtr;
+import javax.swing.JOptionPane;
+import static views.MainScr.host;
+
 /**
  *
  * @author BLUECORN
@@ -13,9 +17,12 @@ public class Kill extends javax.swing.JFrame {
     /**
      * Creates new form Kill
      */
-    public Kill() {
+    public Kill(String host) {
         initComponents();
+        IP = host;
     }
+    
+    public static String IP;
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -26,14 +33,14 @@ public class Kill extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jTextField1 = new javax.swing.JTextField();
+        txtPID = new javax.swing.JTextField();
         KillBtn = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Kill");
 
-        jTextField1.setText("Nhập ID");
-        jTextField1.setBorder(null);
+        txtPID.setText("Nhập ID");
+        txtPID.setBorder(null);
 
         KillBtn.setText("Kill");
         KillBtn.addActionListener(new java.awt.event.ActionListener() {
@@ -48,7 +55,7 @@ public class Kill extends javax.swing.JFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 295, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(txtPID, javax.swing.GroupLayout.PREFERRED_SIZE, 295, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 11, Short.MAX_VALUE)
                 .addComponent(KillBtn)
                 .addContainerGap())
@@ -58,7 +65,7 @@ public class Kill extends javax.swing.JFrame {
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap(22, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txtPID, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(KillBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap())
         );
@@ -68,8 +75,23 @@ public class Kill extends javax.swing.JFrame {
 
     private void KillBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_KillBtnActionPerformed
         // TODO add your handling code here:
-        Killsuccessful k = new Killsuccessful();
-        k.setVisible(true);
+        //Killsuccessful k = new Killsuccessful();
+        //k.setVisible(true);
+        try {
+            String PID = txtPID.getText();
+            System.out.println(PID);
+            RATClientCtr.ConnectionCtr(host);
+            String res = RATClientCtr.getConnectRes();
+            if(res.equals("ok")) {
+                RATClientCtr.KillApp(PID);
+                JOptionPane.showMessageDialog(rootPane, "Success!");
+            }else {
+                JOptionPane.showMessageDialog(rootPane, "Fail!");
+            }
+          RATClientCtr.closeConn();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }//GEN-LAST:event_KillBtnActionPerformed
 
     /**
@@ -102,13 +124,13 @@ public class Kill extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new Kill().setVisible(true);
+                new Kill("").setVisible(true);
             }
         });
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton KillBtn;
-    private javax.swing.JTextField jTextField1;
+    private javax.swing.JTextField txtPID;
     // End of variables declaration//GEN-END:variables
 }

@@ -208,7 +208,7 @@ public class MainScr extends javax.swing.JFrame {
 
     private void ProcessBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ProcessBtnActionPerformed
         // TODO add your handling code here:
-        Process p = new Process();
+        Process p = new Process(host);
         p.setVisible(true);
     }//GEN-LAST:event_ProcessBtnActionPerformed
 

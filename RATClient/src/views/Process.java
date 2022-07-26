@@ -4,6 +4,12 @@
  */
 package views;
 
+import controllers.RATClientCtr;
+import java.util.ArrayList;
+import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
+import static views.MainScr.host;
+
 /**
  *
  * @author BLUECORN
@@ -13,9 +19,13 @@ public class Process extends javax.swing.JFrame {
     /**
      * Creates new form Process
      */
-    public Process() {
+    public Process(String host) {
         initComponents();
+        IP = host; 
     }
+    
+    public static String IP;
+
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -27,8 +37,8 @@ public class Process extends javax.swing.JFrame {
     private void initComponents() {
 
         StopBtn = new javax.swing.JButton();
-        jButton2 = new javax.swing.JButton();
-        jButton3 = new javax.swing.JButton();
+        WatchBtn = new javax.swing.JButton();
+        DeleteBtn = new javax.swing.JButton();
         StartBtn = new javax.swing.JButton();
         BackBtn = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
@@ -44,14 +54,19 @@ public class Process extends javax.swing.JFrame {
             }
         });
 
-        jButton2.setText("Watch");
-        jButton2.addActionListener(new java.awt.event.ActionListener() {
+        WatchBtn.setText("Watch");
+        WatchBtn.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton2ActionPerformed(evt);
+                WatchBtnActionPerformed(evt);
             }
         });
 
-        jButton3.setText("Delete");
+        DeleteBtn.setText("Delete");
+        DeleteBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                DeleteBtnActionPerformed(evt);
+            }
+        });
 
         StartBtn.setText("Start");
         StartBtn.addActionListener(new java.awt.event.ActionListener() {
@@ -69,29 +84,10 @@ public class Process extends javax.swing.JFrame {
 
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null}
+
             },
             new String [] {
-                "New Process", "ID Process", "Count Thread"
+                "ID", "Name"
             }
         ));
         jScrollPane1.setViewportView(jTable1);
@@ -112,9 +108,9 @@ public class Process extends javax.swing.JFrame {
                             .addGroup(layout.createSequentialGroup()
                                 .addComponent(StopBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(62, 62, 62)
-                                .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 83, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(WatchBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 83, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 72, Short.MAX_VALUE)
-                                .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 84, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(DeleteBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 84, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(67, 67, 67)))
                         .addComponent(StartBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 82, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap())
@@ -128,8 +124,8 @@ public class Process extends javax.swing.JFrame {
                 .addGap(5, 5, 5)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(StartBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 56, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButton3, javax.swing.GroupLayout.DEFAULT_SIZE, 58, Short.MAX_VALUE)
-                    .addComponent(jButton2, javax.swing.GroupLayout.DEFAULT_SIZE, 58, Short.MAX_VALUE)
+                    .addComponent(DeleteBtn, javax.swing.GroupLayout.DEFAULT_SIZE, 58, Short.MAX_VALUE)
+                    .addComponent(WatchBtn, javax.swing.GroupLayout.DEFAULT_SIZE, 58, Short.MAX_VALUE)
                     .addComponent(StopBtn, javax.swing.GroupLayout.DEFAULT_SIZE, 58, Short.MAX_VALUE))
                 .addContainerGap())
         );
@@ -139,26 +135,55 @@ public class Process extends javax.swing.JFrame {
 
     private void StartBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_StartBtnActionPerformed
         // TODO add your handling code here:
-        Start start = new Start();
+        Start start = new Start(IP);
         start.setVisible(true);
     }//GEN-LAST:event_StartBtnActionPerformed
 
     private void StopBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_StopBtnActionPerformed
         // TODO add your handling code here:
-        Kill k = new Kill();
+        Kill k = new Kill(IP);
         k.setVisible(true);
     }//GEN-LAST:event_StopBtnActionPerformed
 
-    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+    private void WatchBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_WatchBtnActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jButton2ActionPerformed
+        try {
+            RATClientCtr.ConnectionCtr(IP);
+            String res = RATClientCtr.getConnectRes();
+            if(res.equals("ok")) {
+                RATClientCtr.Process();
+                ArrayList<String> data = new ArrayList<String>();
+                RATClientCtr.getCommandRes(data);
+                String out[] = null;
+                DefaultTableModel tblModel = (DefaultTableModel)jTable1.getModel();
+                for(int i = 1; i < data.size(); i++) {
+                    out = data.get(i).trim().split("\\s+");
+                    tblModel.addRow(out);
+                }
+               
+                JOptionPane.showMessageDialog(rootPane, "Success!");
+            }else {
+                JOptionPane.showMessageDialog(rootPane, "Fail!");
+            }
+          RATClientCtr.closeConn();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }//GEN-LAST:event_WatchBtnActionPerformed
 
     private void BackBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BackBtnActionPerformed
         // TODO add your handling code here:
-        MainScr sc = new MainScr();
+        MainScr sc = new MainScr(IP);
         sc.setVisible(true);
         Process.this.setVisible(false);
     }//GEN-LAST:event_BackBtnActionPerformed
+
+    private void DeleteBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_DeleteBtnActionPerformed
+        // TODO add your handling code here:
+        Process.this.setVisible(false);
+        Process p = new Process(IP);
+        p.setVisible(true);
+    }//GEN-LAST:event_DeleteBtnActionPerformed
 
     /**
      * @param args the command line arguments
@@ -191,17 +216,17 @@ public class Process extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new Process().setVisible(true);
+                new Process("").setVisible(true);
             }
         });
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton BackBtn;
+    private javax.swing.JButton DeleteBtn;
     private javax.swing.JButton StartBtn;
     private javax.swing.JButton StopBtn;
-    private javax.swing.JButton jButton2;
-    private javax.swing.JButton jButton3;
+    private javax.swing.JButton WatchBtn;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable jTable1;
     // End of variables declaration//GEN-END:variables

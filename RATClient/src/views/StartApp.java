@@ -5,7 +5,6 @@
 package views;
 
 import controllers.RATClientCtr;
-import java.util.ArrayList;
 import javax.swing.JOptionPane;
 import static views.MainScr.host;
 
