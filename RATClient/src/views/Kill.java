@@ -20,6 +20,7 @@ public class Kill extends javax.swing.JFrame {
     public Kill(String host) {
         initComponents();
         IP = host;
+        setLocationRelativeTo(null);
     }
     
     public static String IP;
@@ -92,6 +93,7 @@ public class Kill extends javax.swing.JFrame {
         } catch (Exception e) {
             e.printStackTrace();
         }
+        Kill.this.setVisible(false);
     }//GEN-LAST:event_KillBtnActionPerformed
 
     /**

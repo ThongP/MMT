@@ -20,6 +20,7 @@ public class StopApp extends javax.swing.JFrame {
     public StopApp(String host) {
         initComponents();
         IP = host;
+        setLocationRelativeTo(null);
     }
     
     public static String IP;
@@ -89,6 +90,7 @@ public class StopApp extends javax.swing.JFrame {
         } catch (Exception e) {
             e.printStackTrace();
         }
+        StopApp.this.setVisible(false);
     }//GEN-LAST:event_StopBtnActionPerformed
 
     /**

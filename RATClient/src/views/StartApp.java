@@ -20,6 +20,7 @@ public class StartApp extends javax.swing.JFrame {
     public StartApp(String host) {
         initComponents();
         IP = host;
+        setLocationRelativeTo(null);
     }
     
     public static String IP;
@@ -93,6 +94,7 @@ public class StartApp extends javax.swing.JFrame {
         } catch (Exception e) {
             e.printStackTrace();
         }
+        StartApp.this.setVisible(false);
     }//GEN-LAST:event_StartBtnActionPerformed
 
     /**

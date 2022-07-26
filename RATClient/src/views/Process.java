@@ -22,6 +22,7 @@ public class Process extends javax.swing.JFrame {
     public Process(String host) {
         initComponents();
         IP = host; 
+        setLocationRelativeTo(null);
     }
     
     public static String IP;
@@ -45,7 +46,7 @@ public class Process extends javax.swing.JFrame {
         jTable1 = new javax.swing.JTable();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setTitle("ListApp");
+        setTitle("ListProcess");
 
         StopBtn.setText("Kill");
         StopBtn.addActionListener(new java.awt.event.ActionListener() {
@@ -61,7 +62,7 @@ public class Process extends javax.swing.JFrame {
             }
         });
 
-        DeleteBtn.setText("Delete");
+        DeleteBtn.setText("Clear");
         DeleteBtn.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 DeleteBtnActionPerformed(evt);

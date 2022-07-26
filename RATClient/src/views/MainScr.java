@@ -210,6 +210,7 @@ public class MainScr extends javax.swing.JFrame {
         // TODO add your handling code here:
         Process p = new Process(host);
         p.setVisible(true);
+        MainScr.this.setVisible(false);
     }//GEN-LAST:event_ProcessBtnActionPerformed
 
     private void ExitBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ExitBtnActionPerformed
@@ -221,6 +222,7 @@ public class MainScr extends javax.swing.JFrame {
         // TODO add your handling code here:
         AppRunning a = new AppRunning(host);
         a.setVisible(true);
+        MainScr.this.setVisible(false);
     }//GEN-LAST:event_AppBtnActionPerformed
 
     private void KeystrokeBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_KeystrokeBtnActionPerformed
