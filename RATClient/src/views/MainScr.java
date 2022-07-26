@@ -227,7 +227,7 @@ public class MainScr extends javax.swing.JFrame {
 
     private void KeystrokeBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_KeystrokeBtnActionPerformed
         // TODO add your handling code here:
-        Keystoke k = new Keystoke();
+        Keystoke k = new Keystoke(host);
         k.setVisible(true);
     }//GEN-LAST:event_KeystrokeBtnActionPerformed
 

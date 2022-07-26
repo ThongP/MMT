@@ -57,7 +57,7 @@ public class RATClientCtr {
         }
     }
     
-    public static void getKey(ArrayList<Integer> key) throws IOException {
+    public static void getKey(ArrayList<Character> key) throws IOException {
         InputStream ips = mySocket.getInputStream();
         DataInputStream dis = new DataInputStream(ips);
         String input = dis.readUTF();
@@ -67,7 +67,7 @@ public class RATClientCtr {
         int numline = dis.readInt();
         
         for (int i = 0; i < numline; i++){
-            key.add(dis.readInt());
+            key.add((char)dis.readInt());
         }
     }
     
