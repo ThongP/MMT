@@ -8,7 +8,6 @@ import controllers.RATClientCtr;
 import java.util.ArrayList;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
-import static views.MainScr.host;
 
 /**
  *
@@ -142,8 +141,8 @@ public class Process extends javax.swing.JFrame {
 
     private void StopBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_StopBtnActionPerformed
         // TODO add your handling code here:
-        Kill k = new Kill(IP);
-        k.setVisible(true);
+        StopApp sa = new StopApp(IP);
+        sa.setVisible(true);
     }//GEN-LAST:event_StopBtnActionPerformed
 
     private void WatchBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_WatchBtnActionPerformed

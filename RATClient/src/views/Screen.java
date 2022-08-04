@@ -10,6 +10,7 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
+import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 
 /**
@@ -142,11 +143,19 @@ public class Screen extends javax.swing.JFrame {
 
     private void SaveBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_SaveBtnActionPerformed
         // TODO add your handling code here:
-        try {
-            ImageIO.write(img, "jpg", new File("screen.jpg"));
-            JOptionPane.showMessageDialog(rootPane, "Success!");
-        } catch (Exception e) {
-            e.printStackTrace();
+        JFileChooser f = new JFileChooser();
+        f.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
+        f.showSaveDialog(null);
+        if(!f.getSelectedFile().getAbsolutePath().isEmpty()) {
+            try {
+                File files = new File(f.getSelectedFile().getAbsolutePath()+"\\"+"screen.jpg");
+                files.getParentFile().mkdirs();
+                files.createNewFile();
+                ImageIO.write(img, "jpg", files);
+                JOptionPane.showMessageDialog(rootPane, "Success!");
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
         }
     }//GEN-LAST:event_SaveBtnActionPerformed
 

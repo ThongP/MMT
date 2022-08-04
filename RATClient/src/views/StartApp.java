@@ -82,10 +82,10 @@ public class StartApp extends javax.swing.JFrame {
             if(res.equals("ok")) {
                 RATClientCtr.StartApp(name);
                 res = RATClientCtr.getConnectRes();
-                if(res.equals("ok")) {
-                    JOptionPane.showMessageDialog(rootPane, "Success!");
-                }else {
+                if(res.equals("no")) {
                     JOptionPane.showMessageDialog(rootPane, "Fail!");
+                }else {
+                    JOptionPane.showMessageDialog(rootPane, "Success!");
                 }
             }else {
                 JOptionPane.showMessageDialog(rootPane, "Fail!");

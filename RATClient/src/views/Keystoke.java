@@ -21,6 +21,7 @@ public class Keystoke extends javax.swing.JFrame {
     public Keystoke(String host) {
         initComponents();
         IP = host;
+        jTextArea1.setEditable(false);
     }
     
     public static String IP;
@@ -94,25 +95,24 @@ public class Keystoke extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jScrollPane1)
                     .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(BackBtn)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(HookBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(62, 62, 62)
-                                .addComponent(UnhookBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 83, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 72, Short.MAX_VALUE)
-                                .addComponent(PrintkeyBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 84, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(67, 67, 67)))
-                        .addComponent(DeleteBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 82, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(HookBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(62, 62, 62)
+                        .addComponent(UnhookBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 83, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 72, Short.MAX_VALUE)
+                        .addComponent(PrintkeyBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 84, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(67, 67, 67)
+                        .addComponent(DeleteBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 82, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(BackBtn)
+                        .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
                 .addComponent(BackBtn)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 393, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -124,10 +124,14 @@ public class Keystoke extends javax.swing.JFrame {
         );
 
         pack();
+        setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
     private void DeleteBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_DeleteBtnActionPerformed
         // TODO add your handling code here:
+        this.dispose();
+        Keystoke ks = new Keystoke(host);
+        ks.setVisible(true);
     }//GEN-LAST:event_DeleteBtnActionPerformed
 
     private void HookBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_HookBtnActionPerformed
@@ -173,13 +177,6 @@ public class Keystoke extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_UnhookBtnActionPerformed
 
-    private void BackBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BackBtnActionPerformed
-        // TODO add your handling code here:
-        MainScr sc = new MainScr();
-        sc.setVisible(true);
-        Keystoke.this.setVisible(false);
-    }//GEN-LAST:event_BackBtnActionPerformed
-
     private void PrintkeyBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_PrintkeyBtnActionPerformed
         // TODO add your handling code here:
         if(host.isEmpty()) {
@@ -189,11 +186,15 @@ public class Keystoke extends javax.swing.JFrame {
                 RATClientCtr.ConnectionCtr(host);
                 String res = RATClientCtr.getConnectRes();
                 if(res.equals("ok")) { 
-                    RATClientCtr.getKey(key);
-                    for(int i = 0; i < key.size(); i++) {
-                        jTextArea1.append(key.get(i).toString());
+                    res = RATClientCtr.getKey(key);
+                    if(res.equals("no")) {
+                        JOptionPane.showMessageDialog(rootPane, "Fail!");
+                    }else {
+                        for(int i = 0; i < key.size(); i++) {
+                            jTextArea1.append(key.get(i).toString());
+                        }
+                        JOptionPane.showMessageDialog(rootPane, "Success!");
                     }
-                    JOptionPane.showMessageDialog(rootPane, "Success!");
                 }else {
                     JOptionPane.showMessageDialog(rootPane, "Fail!");
                 }
@@ -203,6 +204,13 @@ public class Keystoke extends javax.swing.JFrame {
             }
         }
     }//GEN-LAST:event_PrintkeyBtnActionPerformed
+
+    private void BackBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BackBtnActionPerformed
+        // TODO add your handling code here:
+        this.setVisible(false);
+        MainScr ms = new MainScr(host);
+        ms.setVisible(true);
+    }//GEN-LAST:event_BackBtnActionPerformed
 
     /**
      * @param args the command line arguments

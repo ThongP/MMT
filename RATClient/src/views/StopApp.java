@@ -77,16 +77,20 @@ public class StopApp extends javax.swing.JFrame {
         // TODO add your handling code here:
         try {
             String PID = txtPID.getText();
-            System.out.println(PID);
             RATClientCtr.ConnectionCtr(host);
             String res = RATClientCtr.getConnectRes();
             if(res.equals("ok")) {
                 RATClientCtr.KillApp(PID);
-                JOptionPane.showMessageDialog(rootPane, "Success!");
+                res = RATClientCtr.getConnectRes();
+                if(res.equals("no")) {
+                    JOptionPane.showMessageDialog(rootPane, "Fail!");
+                }else {
+                    JOptionPane.showMessageDialog(rootPane, "Success!");
+                }
             }else {
                 JOptionPane.showMessageDialog(rootPane, "Fail!");
             }
-          RATClientCtr.closeConn();
+            RATClientCtr.closeConn();
         } catch (Exception e) {
             e.printStackTrace();
         }

@@ -1,7 +1,6 @@
 package views;
 
 import controllers.RATClientCtr;
-import java.awt.*;
 import javax.swing.JOptionPane;
 import java.awt.event.WindowEvent;
 
@@ -229,6 +228,7 @@ public class MainScr extends javax.swing.JFrame {
         // TODO add your handling code here:
         Keystoke k = new Keystoke(host);
         k.setVisible(true);
+        this.setVisible(false);
     }//GEN-LAST:event_KeystrokeBtnActionPerformed
 
     /**
