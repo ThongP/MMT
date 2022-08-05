@@ -40,7 +40,12 @@ public class Start extends javax.swing.JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Start");
 
-        txtName.setText("Nhập tên process");
+        txtName.setText("Input process");
+        txtName.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtNameActionPerformed(evt);
+            }
+        });
 
         StartBtn.setText("Start");
         StartBtn.addActionListener(new java.awt.event.ActionListener() {
@@ -98,6 +103,10 @@ public class Start extends javax.swing.JFrame {
         }
         Start.this.setVisible(false);
     }//GEN-LAST:event_StartBtnActionPerformed
+
+    private void txtNameActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtNameActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtNameActionPerformed
 
     /**
      * @param args the command line arguments

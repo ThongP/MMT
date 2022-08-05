@@ -75,7 +75,7 @@ public class MainScr extends javax.swing.JFrame {
             }
         });
 
-        KeystrokeBtn.setText("Keystroke");
+        KeystrokeBtn.setText("Key Loging");
         KeystrokeBtn.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 KeystrokeBtnActionPerformed(evt);
@@ -97,7 +97,8 @@ public class MainScr extends javax.swing.JFrame {
             }
         });
 
-        AppBtn.setText("Apprunning");
+        AppBtn.setText("App Running");
+        AppBtn.setToolTipText("");
         AppBtn.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 AppBtnActionPerformed(evt);

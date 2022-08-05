@@ -49,8 +49,11 @@
   <SubComponents>
     <Component class="javax.swing.JTextField" name="txtName">
       <Properties>
-        <Property name="text" type="java.lang.String" value="Nh&#x1ead;p t&#xea;n process"/>
+        <Property name="text" type="java.lang.String" value="Input process"/>
       </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="txtNameActionPerformed"/>
+      </Events>
     </Component>
     <Component class="javax.swing.JButton" name="StartBtn">
       <Properties>

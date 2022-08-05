@@ -116,7 +116,7 @@
     </Component>
     <Component class="javax.swing.JButton" name="KeystrokeBtn">
       <Properties>
-        <Property name="text" type="java.lang.String" value="Keystroke"/>
+        <Property name="text" type="java.lang.String" value="Key Loging"/>
       </Properties>
       <Events>
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="KeystrokeBtnActionPerformed"/>
@@ -143,7 +143,8 @@
     </Component>
     <Component class="javax.swing.JButton" name="AppBtn">
       <Properties>
-        <Property name="text" type="java.lang.String" value="Apprunning"/>
+        <Property name="text" type="java.lang.String" value="App Running"/>
+        <Property name="toolTipText" type="java.lang.String" value=""/>
       </Properties>
       <Events>
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="AppBtnActionPerformed"/>
