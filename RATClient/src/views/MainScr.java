@@ -4,10 +4,6 @@ import controllers.RATClientCtr;
 import javax.swing.JOptionPane;
 import java.awt.event.WindowEvent;
 
-/**
- *
- * @author gbrid
- */
 public class MainScr extends javax.swing.JFrame {
 
     /**

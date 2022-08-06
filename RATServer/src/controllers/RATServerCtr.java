@@ -21,10 +21,6 @@ import lc.kra.system.keyboard.GlobalKeyboardHook;
 import lc.kra.system.keyboard.event.GlobalKeyAdapter;
 import lc.kra.system.keyboard.event.GlobalKeyEvent;
 
-/**
- *
- * @author gbrid
- */
 public class RATServerCtr {
     private int port;
     //private String host;

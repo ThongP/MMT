@@ -1,17 +1,9 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
- */
 package views;
 
 import controllers.RATClientCtr;
 import javax.swing.JOptionPane;
 import static views.MainScr.host;
 
-/**
- *
- * @author BLUECORN
- */
 public class Start extends javax.swing.JFrame {
 
     /**

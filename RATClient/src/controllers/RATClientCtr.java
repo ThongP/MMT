@@ -12,10 +12,6 @@ import java.net.Socket;
 import java.util.ArrayList;
 import javax.imageio.ImageIO;
 
-/**
- *
- * @author gbrid
- */
 public class RATClientCtr {
     private static final int port = 8888;
     private static String host;
