@@ -193,6 +193,7 @@ public class Keystoke extends javax.swing.JFrame {
                         for(int i = 0; i < key.size(); i++) {
                             jTextArea1.append(key.get(i).toString());
                         }
+                        jTextArea1.append("\n");
                         JOptionPane.showMessageDialog(rootPane, "Success!");
                     }
                 }else {

